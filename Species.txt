@@ -1,0 +1,224 @@
+[
+{"OLEANDRO": "Oleandro (Nerium oleander)",
+ "Nerium Oleander (oleandro)": "Oleandro (Nerium oleander)",
+ "Oleandro (Nerium Oleander)": "Oleandro (Nerium oleander)",
+ "Nerium oleander (oleandro)": "Oleandro (Nerium oleander)"},
+
+{"MALVA": "Malva (Malva sylvestris L.)",
+ "Malva sylvestris L. (malva)": "Malva (Malva sylvestris L.)"},
+
+{"OLIVO": "Olivo (Olea europaea)",
+ "Olea Europaea (olivo)": "Olivo (Olea europaea)",
+ "Olivo (Olea europaea)": "Olivo (Olea europaea)"},
+
+{"SORGHETTO": "Sorghetto (Sorghum halepense)"},
+
+{"MANDORLO": "Mandorlo (Prunus dulcis)",
+ "Amygdalus Communis (mandorlo)": "Mandorlo (Prunus dulcis)",
+ "Mandorlo (Prunus dulcis)": "Mandorlo (Prunus dulcis)",
+ "Amygdalus communis (mandorlo)": "Mandorlo (Prunus dulcis)",
+ "Prunus Dulcis": "Mandorlo (Prunus dulcis)",
+ "Prunus Dulcis (mandorlo)": "Mandorlo (Prunus dulcis)"},
+
+{"QUERCUS": "Quercia (di ogni specie)",
+ "Quercus spp (querce di ogni specie)": "Quercia (di ogni specie)",
+ "Quercia Vallonea": "Quercia (di ogni specie)"},
+
+{"VITE": "Vite (di ogni specie)",
+ "Vitis Vinifera (vite)": "Vite (di ogni specie)",
+ "Vitis vinifera subsp. silvestris (vite selvatica)": "Vite (di ogni specie)",
+ "Vitis Berlandieri x V.Rupestris": "Vite (di ogni specie)",
+ "Vitis Berlandieri x V.Riparia": "Vite (di ogni specie)"},
+
+{"CACTUS": "Cactus (di ogni specie)",
+ "FICO D`INDIA": "Cactus (di ogni specie)",
+ "CACTACEE": "Cactus (di ogni specie)"},
+
+{"SUSINO": "Susino (Prunus domestica)",
+ "Prunus Domestica (susino)": "Susino (Prunus domestica)"},
+
+{"GRAMIGNA": "Gramigna (Cynodon dactylon)",
+ "Cynodon Dactylon (gramigna)": "Gramigna (Cynodon dactylon)"},
+
+{"CITRUS X CLEMENTINA": "Agrume (di ogni specie)",
+ "CITRUS X SINENSIS": "Agrume (di ogni specie)",
+ "CITRUS X LIMON": "Agrume (di ogni specie)",
+ "CITRUS RETICULATA": "Agrume (di ogni specie)",
+ "citrus arancio": "Agrume (di ogni specie)",
+ "citrus limone": "Agrume (di ogni specie)",
+ "citrus clementina": "Agrume (di ogni specie)",
+ "agrumi": "Agrume (di ogni specie)",
+ "Agrume (Citrus)": "Agrume (di ogni specie)"},
+
+{"TUIA O.": "Tuia"},
+
+{"ALLORO": "Alloro (Laurus nobilis)",
+ "Laurus Nobilis (alloro)": "Alloro (Laurus nobilis)",
+ "Alloro (Laurus nobilis)": "Alloro (Laurus nobilis)"},
+
+{"PINO": "Pino"},
+
+{"EUCALIPTUS": "Eucalipto (Eucalyptus)",
+ "eucalipto": "Eucalipto (Eucalyptus)"},
+
+{"NESPOLO": "Nespolo (Crataegus germanica)"},
+
+{"PALMA": "Palma (di ogni specie)",
+ "CANARIENSIS": "Palma (di ogni specie)",
+ "CHAMAEROPS": "Palma (di ogni specie)",
+ "WASHINGTONIA": "Palma (di ogni specie)"},
+
+{"IUCCA": "Yucca"},
+
+{"FICO": "Fico (Ficus carica)",
+ "Fico": "Fico (Ficus carica)"},
+
+{"POLYGALA MYRTIFOLIA": "Poligala (Polygala myrtifolia)",
+ "Polygala Myrtifolia": "Poligala (Polygala myrtifolia)",
+ "Poligala (Polygala myrtifolia)": "Poligala (Polygala myrtifolia)"},
+
+{"CILIEGIO": "Ciliegio (Prunus avium)",
+ "Prunus Avium": "Ciliegio (Prunus avium)",
+ "Ciliegio selvatico (Prunus avium)": "Ciliegio (Prunus avium)",
+ "Ciliegio (Prunus avium)": "Ciliegio (Prunus avium)"},
+
+{"ACACIA SALIGNA": "Acacia (di ogni specie)",
+ "acacia": "Acacia (di ogni specie)",
+ "Acacia Saligna": "Acacia (di ogni specie)",
+ "Acacia saligna (Acacia saligna Labill. Wendl.)": "Acacia (di ogni specie)",
+ "Acacia spp": "Acacia (di ogni specie)"},
+
+{"WESTRINGIA FRUTICOSA": "Westringia (di ogni specie)",
+ "Westringia Fructicosa": "Westringia (di ogni specie)",
+ "Westringia Glabra": "Westringia (di ogni specie)",
+ "Westringia bianca (Westringia fruticosa)": "Westringia (di ogni specie)",
+ "Westringia (Westringia glabra)": "Westringia (di ogni specie)"},
+
+{"GINESTRA": "Ginestra (Spartium junceum)",
+ "Spartium Junceum (ginestra)": "Ginestra (Spartium junceum)",
+ "Ginestra (Spartium junceum)": "Ginestra (Spartium junceum)"},
+
+{"CARRUBO": "Carrubo (Ceratonia siliqua)"},
+
+{"LECCIO": "Leccio (Quercus ilex)",
+ "Quercus Ilex L. (leccio)": "Leccio (Quercus ilex)",
+ "Quercus Ilex (leccio)": "Leccio (Quercus ilex)",
+ "Leccio": "Leccio (Quercus ilex)"},
+
+{"LIGUSTRO": "Ligustro (Ligustrum)"},
+
+{"VIBURNO": "Viburno (Viburnum)"},
+
+{"PITTOSPORO": "Pittosporo (Pittosporum tobira)"},
+
+{"CRATAEGUS": "Biancospino (Crataegus)"},
+
+{"CIPRESSO": "Cipresso (Cupressus)"},
+
+{"ROSA": "Rosa (Rosaceae)"},
+
+{"Vinca Minor (pervinca minore)": "Vinca (Vinca minor)",
+ "Vinca (Vinca Minor)": "Vinca (Vinca minor)"},
+
+{"Catharanthus Roseus (vinca rosea)": "Vinca rosea (Catharanthus roseus)",
+ "Vinca Rosea": "Vinca rosea (Catharanthus roseus)",
+ "Pervinca rosea (Catharanthus roseus)": "Vinca rosea (Catharanthus roseus)"},
+
+{"Myrtus Communis (mirto) var. Pumila": "Mirto (Myrtus communis)",
+ "Myrtus Communis (mirto)": "Mirto (Myrtus communis)",
+ "Myrtus communis": "Mirto (Myrtus communis)",
+ "Mirto (Myrtus communis)": "Mirto (Myrtus communis)"},
+
+{"Rhamnus Alaternus (alaterno)": "Alaterno (Rhamnus alaternus)",
+ "Alaterno (Rhamnus alaternus)": "Alaterno (Rhamnus alaternus)"},
+
+{"Rosmarinus Officinalis (rosmarino)": "Rosmarino (Rosmarinus officinalis)",
+ "Rosmarino (Rosmarinus officinalis)": "Rosmarino (Rosmarinus officinalis)"},
+
+{"Grevillea Juniperina": "Grevillea (Grevillea juniperina)",
+ "Grevillea (Grevillea juniperina)": "Grevillea (Grevillea juniperina)"},
+
+{"Asparagus Acutifolius": "Asparago (di ogni specie)",
+ "asparago": "Asparago (di ogni specie)",
+ "Asparagus Officinalis": "Asparago (di ogni specie)",
+ "Asparago selvatico (Asparagus acutifolius)": "Asparago (di ogni specie)",
+ "Asparago": "Asparago (di ogni specie)"},
+
+{"Euphorbia Terracina": "Euforbia (Euphorbia terracina)",
+ "Euforbia (Euphorbia terracina)": "Euforbia (Euphorbia terracina)"},
+
+{"Cistus Creticus": "Cisto (di ogni specie)",
+ "Cistus": "Cisto (di ogni specie)",
+ "Cistus (Cisto)": "Cisto (di ogni specie)",
+ "Cistus rosa": "Cisto (di ogni specie)",
+ "Cisto rosso (Cistus creticus)": "Cisto (di ogni specie)",
+ "Cistus bianco": "Cisto (di ogni specie)"},
+
+{"Prunus Persica (pesco)": "Pesco (Prunus persica)",
+ "Pesco (Prunus persica)": "Pesco (Prunus persica)"},
+
+{"Prunus spp": "Prunus (di ogni specie)"},
+
+{"Prunus Armeniaca (albicocco)": "Albicocco (Prunus armeniaca)",
+ "Albicocco (Prunus armeniaca L.)": "Albicocco (Prunus armeniaca)"},
+
+{"Callistemon Citrinus (callistemo)": "Callistemo (Callistemon citrinus)"},
+
+{"Nandina Domestica (nandina)": "Nandina (Nandina domestica)"},
+
+{"Myoporum Insulare": "Myoporum (Myoporum insulare)",
+ "Myoporum (Myoporum insulare)": "Myoporum (Myoporum insulare)"},
+
+{"Dodonaea Viscosa Purpurea": "Dodonea viscosa (Dodonaea viscosa purpurea)",
+ "Dodonea viscosa (Dodonaea viscosa purpurea)": "Dodonea viscosa (Dodonaea viscosa purpurea)"},
+
+{"Lavandula Angustifolia": "Lavanda (di ogni specie)",
+ "Lavanda": "Lavanda (di ogni specie)",
+ "Lavandula Stoechas L.": "Lavanda (di ogni specie)",
+ "Lavanda officinale (Lavandula angustifolia)": "Lavanda (di ogni specie)",
+ "Lavanda selvatica (Lavandula stoechas)": "Lavanda (di ogni specie)"},
+
+{"Citronella": "Citronella (Cymbopogon)"},
+
+{"Phillyrea Latifolia L.": "Fillirea (di ogni specie)",
+ "Phillyrea (fillirea)": "Fillirea (di ogni specie)",
+ "Fillirea (Phillyrea latifolia)": "Fillirea (di ogni specie)",
+ "Phillyrea angustifolia (fillirea angustifolia)": "Fillirea (di ogni specie)"},
+
+{"Pelargonium Fragrans (geranio)": "Geranio (Pelargonium fragrans)",
+ "Pelergonio (geranio odoroso)": "Geranio (Pelargonium fragrans)",
+ "Geranio Odoroso (Pelargonium x fragans)": "Geranio (Pelargonium fragrans)"},
+
+{"Pistacia Lentiscus (lentisco)": "Lentisco (Pistacia lentiscus)"},
+
+{"macchia mediterranea": "Macchia mediterranea"},
+
+{"Erigeron": "Erigeron (di ogni specie)",
+ "Erigeron Sumatrensis": "Erigeron (di ogni specie)",
+ "Erigeron Bonariensis": "Erigeron (di ogni specie)",
+ "Saeppola di Buenos Aires (Erigeron Bonariensis)": "Erigeron (di ogni specie)",
+ "Saeppola di Naudin (Erigeron Sumatrensis)": "Erigeron (di ogni specie)"},
+
+{"Eremophila Maculata F. Muell.": "Eremophila (Eremophila maculata)",
+ "Eremophila (Eremophila maculata)": "Eremophila (Eremophila maculata)"},
+
+{"Arbutus Unedo L. (corbezzolo)": "Corbezzolo (Arbutus unedo)"},
+
+{"Pyrus Pyraster L. (perastro)": "Perastro (Pyrus pyraster)"},
+
+{"Caffè": "Caffè (Coffea)"},
+
+{"Chenopodium Album": "Farinello comune (Chenopodium Album)",
+ "Farinello comune (Chenopodium Album)": "Farinello comune (Chenopodium Album)"},
+
+{"tamerici": "Tamerice (di ogni specie)"},
+
+{"Heliotropum Europaeum": "Eliotropio selvatico (Heliotropum Europaeum)",
+ "Eliotropio selvatico (Heliotropum Europaeum)": "Eliotropio selvatico (Heliotropum Europaeum)"},
+
+{"Hebe (pianta di Hebe)": "Pianta di Hebe (Hebe)"},
+
+{"Altro": "Altro"},
+
+{"Amaranto (Amarantus retro flexus)": "Amaranto (Amarantus retro flexus)"},
+]
