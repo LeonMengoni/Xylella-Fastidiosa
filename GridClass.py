@@ -291,3 +291,16 @@ class Grid():
             cbar = fig.colorbar(im, ax=ax, orientation="horizontal")
             cbar.set_label("Disease incidence")
             plt.show()
+
+    def plot_final_incidence(self, figsize=(6,6)):
+        # Attributes for plot
+        cmap_inferno = mpl.colormaps["inferno"]
+        im_sea = np.ma.array(self.density, mask=~self.sea_mask)
+
+        fig, ax = plt.subplots(figsize=figsize)
+        ax.set_title(f"Final timestep {self.timesteps}")
+        im = ax.imshow(self.output[-1], cmap=cmap_inferno, norm=colors.Normalize(vmin=0, vmax=1))
+        ax.imshow(im_sea, cmap=colors.ListedColormap(['tab:blue']), interpolation=None)
+        cbar = fig.colorbar(im, ax=ax, orientation="horizontal")
+        cbar.set_label("Disease incidence")
+        plt.show()
