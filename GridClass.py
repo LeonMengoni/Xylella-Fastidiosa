@@ -82,6 +82,9 @@ class Grid():
         # BZW: buffer zone width 
         # BZ_eff: buffer zone roguing efficiency
         self.control = True
+        self.EZW = EZW
+        self.BZW = BZW
+        self.BZ_eff = BZ_eff
         xp1, yp1 = [253, 212]
         xp2, yp2 = [278, 183]
 
@@ -100,8 +103,6 @@ class Grid():
                     self.BZ_mask[y,x] = True
         
         self.density[self.EZ_mask] = 0 # eradicate all trees in EZ
-        # TODO: add control efficiency
-
         self.grove_mask = self.density > 0
         self.no_grove_mask = self.density == 0
 
@@ -133,7 +134,7 @@ class Grid():
 
     # LOCAL GROWTH
     def __Gompertz_local_growth(self):
-        self.I = self.K ** (1 - np.exp(-self.A)) * (self.I ** np.exp(-self.A))
+        self.I = self.K ** (1 - np.exp(-self.A)) * (self.I ** np.exp(-self.A)) # Number of locally infected trees
 
     def __adjust_population(self):
         self.I[self.no_grove_mask] = 0
@@ -232,8 +233,8 @@ class Grid():
         self.parameters = parameters
         self.dispersal_type = dispersal_type
         
-        self.output = np.zeros((self.timesteps+1, self.rows, self.cols)) # Incidence at the end of the year
-        self.I = np.zeros(self.shape) # incidence
+        self.output = np.zeros((self.timesteps+1, self.rows, self.cols)) # Fraction of infected trees
+        self.I = np.zeros(self.shape) # Number of infected trees
 
         # Unpack common parameters
         self.A, self.B, self.a, self.tol = self.parameters['common']
@@ -269,6 +270,16 @@ class Grid():
                     # Long distance dispersal
                     self.__long_distance_dispersal()
                     self.__adjust_population()
+            
+            # Control efficiency in buffer zone
+            rnd = np.random.random(size=self.shape)
+            control_mask = (rnd < self.BZ_eff) & self.BZ_mask # & ~self.sea_mask if want to check over whole region
+            self.density[control_mask] = np.maximum(self.density[control_mask] - self.I[control_mask], 0) # Element-wise maximum of array elements
+            self.I[control_mask] = 0
+            self.grove_mask = self.density > 0 # update grove mask
+            self.no_grove_mask = self.density == 0 # update no grove mask
+            self.K = self.density + self.a * (1 - self.density) # update carrying capacity
+            self.K[self.sea_mask] = 0
 
             # Obtain output
             self.output[t][self.grove_mask] = self.I[self.grove_mask] / self.density[self.grove_mask]
