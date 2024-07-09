@@ -165,13 +165,14 @@ class Grid():
     # TODO: Vectors have a certain probability of infecting a susceptible tree.
     # TODO: Vectors can be eliminated, according to a certain probability, which depends on preventive measures implemented: weeding, roguing, pesticides, etc.
     def __levy_flight_dispersal(self):
-        self.d_max = np.sqrt(np.floor(self.rows / 2)**2 + np.floor(self.cols / 2)**2); # about half the diagonal
+        if self.d_max is None:
+            self.d_max = np.sqrt(np.floor(self.rows / 2)**2 + np.floor(self.cols / 2)**2); # about half the diagonal
         
         sample_power_law_params = {'alpha': self.alpha, 'x_min': self.d_min, 'x_max': self.d_max, 'sample': self.sample}
         d_list = ut.sample_power_law(size=self.n_vectors, **sample_power_law_params)
 
         for i, vector_pos, d in zip(range(self.n_vectors), self.vector_positions, d_list):
-            while d**2 > self.d_max: 
+            while d > self.d_max: 
                 d = ut.sample_power_law(size=1, **sample_power_law_params)
 
             while True:
@@ -217,7 +218,7 @@ class Grid():
             self.__set_short_distance_kernel()
 
         elif self.dispersal_type == 'levy_flight':
-            self.n_vectors, self.d_min, self.alpha, self.sample = parameters[self.dispersal_type]
+            self.n_vectors, self.d_min, self.d_max, self.alpha, self.sample = parameters[self.dispersal_type]
             self.vector_positions = np.full((self.n_vectors,2), self.seed, dtype=int)
         
         self.I[tuple(self.seed)] = self.K[tuple(self.seed)] * np.exp(-self.B)
@@ -238,7 +239,7 @@ class Grid():
             # Control efficiency in buffer zone
             if self.from_file and self.control: 
                 rnd = np.random.random(size=self.shape)
-                control_mask = (rnd < self.BZ_eff) & self.BZ_mask # & ~self.sea_mask if want to check over whole region
+                control_mask = (rnd < self.BZ_eff) & self.BZ_mask # & ~self.sea_mask if want to check over whole grid
                 self.density[control_mask] = np.maximum(self.density[control_mask] - self.I[control_mask], 0) # Element-wise maximum of array elements
                 self.I[control_mask] = 0
                 self.grove_mask = self.density > 0 # update grove mask
