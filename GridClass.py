@@ -43,40 +43,6 @@ class Grid():
             grove_coordinates = np.argwhere(self.grove_mask)
             self.seed = grove_coordinates[np.random.choice(grove_coordinates.shape[0])] # Random seed
 
-    def plot_density(self, figsize=(6,6)):
-        cmap_custom = colors.LinearSegmentedColormap.from_list("", ["yellow", "forestgreen", "darkgreen"]) # grove density color map
-
-        im = np.ma.array(self.density, mask=self.sea_mask)
-        im_sea = np.ma.array(self.density, mask=~self.sea_mask)
-        im_no_grove = np.ma.array(self.density, mask=~self.no_grove_mask)
-        
-        im_list = [im, im_sea, im_no_grove]
-        color_list = ['tab:blue', 'black']
-        cmap_list = [cmap_custom] + [colors.ListedColormap([color]) for color in color_list]
-        label_list = ["Sea", "No groves"]
-
-        if self.control and self.from_file:
-            im_EZ = np.ma.array(self.density, mask=~self.EZ_mask)
-            im_BZ = np.ma.array(self.density, mask=~self.BZ_mask)
-            im_list += [im_EZ, im_BZ]
-            new_colors = ['red', 'orange']
-            color_list += new_colors
-            cmap_list += [colors.ListedColormap([color]) for color in new_colors]
-            label_list += ["Eradication zone (EZ)", "Buffer zone (BZ)"]
-
-        fig, ax = plt.subplots(figsize=figsize)
-        images = []
-        for im, cmap in zip(im_list, cmap_list):
-            images.append(ax.imshow(im, cmap=cmap, interpolation=None))
-
-        ax.set_title("Olive Groves Density")
-        cbar = fig.colorbar(images[0], ax=ax, orientation="horizontal")
-        cbar.set_label("Grove density")
-        patches = [mpatches.Patch(color=color_list[i], label=label_list[i]) for i in range(len(im_list)-1)]
-        plt.legend(handles=patches, loc="upper right")
-
-        plt.show()
-
     def __set_control_zone(self): 
         xp1, yp1 = [253, 212]
         xp2, yp2 = [278, 183]
@@ -109,18 +75,6 @@ class Grid():
 
         elif self.kernel_type == "gaussian":
             self.kernel = np.exp(-(X**2 + Y**2)/(2 * self.beta**2)) / np.sqrt(2 * np.pi * self.beta**2)
-
-    def plot_short_distance_kernel(self, figsize=(6,6)):
-        self.k_threshold = 1e-40
-        self.k_min = max(self.k_threshold, np.min(self.kernel))
-        logNorm = colors.LogNorm(vmin=self.k_min, vmax=1)
-
-        fig, ax = plt.subplots(figsize=figsize)
-        im = ax.imshow(self.kernel, norm=logNorm)
-        if self.kernel_type == "exponential":   ax.set_title("Exponential short distance kernel")
-        elif self.kernel_type == "gaussian":    ax.set_title("Gaussian short distance kernel")
-        fig.colorbar(im, ax=ax)
-        plt.show()
 
     def __adjust_population(self):
         self.I[self.no_grove_mask] = 0
@@ -156,7 +110,6 @@ class Grid():
         self.__adjust_population()
 
     # LEVY FLIGHT DISPERSAL
-    # TODO: Vectors have a certain probability of infecting a susceptible tree.
     # TODO: Vectors can be eliminated, according to a certain probability, which depends on preventive measures implemented: weeding, roguing, pesticides, etc.
     def __levy_flight_dispersal(self):
         if self.d_max is None:
@@ -192,8 +145,8 @@ class Grid():
         self.timesteps = timesteps
         self.parameters = parameters
         
-        self.output = np.zeros((self.timesteps+1, self.rows, self.cols)) # Fraction of infected trees
-        self.I = np.zeros(self.shape) # Number of infected trees
+        self.incidence = np.zeros((self.timesteps+1, self.rows, self.cols)) # Fraction of infected trees
+        self.I = np.zeros(self.shape) # Number of infected trees (absolute density, maximum for a generic cell is self.density for that cell)
 
         # Define control zone parameters
         self.control, self.EZW, self.BZW, self.BZ_eff = self.parameters['control_zone']
@@ -220,7 +173,7 @@ class Grid():
         self.I[tuple(self.seed)] = self.K[tuple(self.seed)] * np.exp(-self.B)
 
         # initiate evolution
-        for t in range(self.output.shape[0]):
+        for t in range(self.incidence.shape[0]):
             if t > 0:
                 # Local growth
                 self.__Gompertz_local_growth()
@@ -243,21 +196,86 @@ class Grid():
                 self.K = self.density + self.a * (1 - self.density) # update carrying capacity
                 self.K[self.sea_mask] = 0
 
-            # Obtain output
-            self.output[t][self.grove_mask] = self.I[self.grove_mask] / self.density[self.grove_mask]
-            self.output[t][self.sea_mask] = -9999
-            self.output[t][self.no_grove_mask] = 0
+            # Obtain incidence
+            self.incidence[t][self.grove_mask] = self.I[self.grove_mask] / self.density[self.grove_mask]
+            self.incidence[t][self.sea_mask] = -9999
+            self.incidence[t][self.no_grove_mask] = 0
+
+    def evaluate_risk(self, N, timesteps, parameters): # average incidence over N simulations
+        self.N = N
+        self.timesteps = timesteps
+        self.parameters = parameters
+
+        self.all_incidences = np.zeros((self.N, self.timesteps+1, self.rows, self.cols))
+        # self.risk = np.zeros((self.timesteps+1, self.rows, self.cols))
+        # self.final_incidence = np.zeros((self.N, self.rows, self.cols))
+
+        # for i in range(N):
+        #     self.simulate(self.timesteps, self.parameters)
+        #     self.final_incidence[i] = self.incidence[-1]
+
+        for i in range(N):
+            self.simulate(self.timesteps, self.parameters)
+            self.all_incidences[i] = self.incidence
+        
+        self.risk = np.mean(self.all_incidences, axis=0)
+
+    def plot_short_distance_kernel(self, figsize=(6,6)):
+        self.k_threshold = 1e-40
+        self.k_min = max(self.k_threshold, np.min(self.kernel))
+        logNorm = colors.LogNorm(vmin=self.k_min, vmax=1)
+
+        fig, ax = plt.subplots(figsize=figsize)
+        im = ax.imshow(self.kernel, norm=logNorm)
+        if self.kernel_type == "exponential":   ax.set_title("Exponential short distance kernel")
+        elif self.kernel_type == "gaussian":    ax.set_title("Gaussian short distance kernel")
+        fig.colorbar(im, ax=ax)
+        plt.show()
+
+    def plot_density(self, figsize=(6,6)):
+        cmap_custom = colors.LinearSegmentedColormap.from_list("", ["yellow", "forestgreen", "darkgreen"]) # grove density color map
+
+        im = np.ma.array(self.density, mask=self.sea_mask)
+        im_sea = np.ma.array(self.density, mask=~self.sea_mask)
+        im_no_grove = np.ma.array(self.density, mask=~self.no_grove_mask)
+        
+        im_list = [im, im_sea, im_no_grove]
+        color_list = ['tab:blue', 'black']
+        cmap_list = [cmap_custom] + [colors.ListedColormap([color]) for color in color_list]
+        label_list = ["Sea", "No groves"]
+
+        if self.control and self.from_file:
+            im_EZ = np.ma.array(self.density, mask=~self.EZ_mask)
+            im_BZ = np.ma.array(self.density, mask=~self.BZ_mask)
+            im_list += [im_EZ, im_BZ]
+            new_colors = ['red', 'orange']
+            color_list += new_colors
+            cmap_list += [colors.ListedColormap([color]) for color in new_colors]
+            label_list += ["Eradication zone (EZ)", "Buffer zone (BZ)"]
+
+        fig, ax = plt.subplots(figsize=figsize)
+        images = []
+        for im, cmap in zip(im_list, cmap_list):
+            images.append(ax.imshow(im, cmap=cmap, interpolation=None))
+
+        ax.set_title("Olive Groves Density")
+        cbar = fig.colorbar(images[0], ax=ax, orientation="horizontal")
+        cbar.set_label("Grove density")
+        patches = [mpatches.Patch(color=color_list[i], label=label_list[i]) for i in range(len(im_list)-1)]
+        plt.legend(handles=patches, loc="upper right")
+
+        plt.show()
 
     def plot_incidence(self, figsize=(6,6)):
         # Attributes for plot
         cmap_inferno = mpl.colormaps["inferno"]
         cmap_inferno.set_under("tab:blue")
 
-        for t in range(len(self.output)):
-            # Plot output for all times starting at 0
+        for t in range(len(self.incidence)):
+            # Plot incidence for all times starting at 0
             fig, ax = plt.subplots(figsize=figsize)
             ax.set_title(f"Timestep {t}")
-            im = ax.imshow(self.output[t], cmap=cmap_inferno, norm=colors.Normalize(vmin=0, vmax=1))
+            im = ax.imshow(self.incidence[t], cmap=cmap_inferno, norm=colors.Normalize(vmin=0, vmax=1))
             cbar = fig.colorbar(im, ax=ax, orientation="horizontal")
             cbar.set_label("Disease incidence")
             plt.show()
@@ -269,7 +287,7 @@ class Grid():
 
         fig, ax = plt.subplots(figsize=figsize)
         ax.set_title(f"Final timestep {self.timesteps}")
-        im = ax.imshow(self.output[-1], cmap=cmap_inferno, norm=colors.Normalize(vmin=0, vmax=1))
+        im = ax.imshow(self.incidence[-1], cmap=cmap_inferno, norm=colors.Normalize(vmin=0, vmax=1))
         ax.imshow(im_sea, cmap=colors.ListedColormap(['tab:blue']), interpolation=None)
         cbar = fig.colorbar(im, ax=ax, orientation="horizontal")
         cbar.set_label("Disease incidence")
