@@ -7,7 +7,7 @@ import matplotlib.patches as mpatches
 import utils as ut
 
 class Grid():
-    def __init__(self, density=None, shape=None, sea_perc=0.25, control=False, EZW=None, BZW=None):
+    def __init__(self, density=None, shape=None, sea_perc=0.25):
         if density is not None: # from file
             self.from_file = True # set flag
             self.density = density
@@ -34,17 +34,11 @@ class Grid():
 
         self.rows, self.cols = self.shape
         self.grove_mask = self.density > 0
-        self.control = control # control zone flag
+        self.control = False # control zone flag
 
         # Set initial infection seed
         if self.from_file:
             self.seed = np.array([235,266]) # Initial spread from Gallipoli
-            if control:
-                if EZW is None or BZW is None:
-                    raise ValueError("EZW and BZW must be provided")
-                self.EZW = EZW 
-                self.BZW = BZW
-                self.__set_control_zone()
         else:
             grove_coordinates = np.argwhere(self.grove_mask)
             self.seed = grove_coordinates[np.random.choice(grove_coordinates.shape[0])] # Random seed
@@ -202,7 +196,9 @@ class Grid():
         self.I = np.zeros(self.shape) # Number of infected trees
 
         # Define control zone parameters
-        self.BZ_eff = self.parameters['control_zone']
+        self.control, self.EZW, self.BZW, self.BZ_eff = self.parameters['control_zone']
+        if self.from_file and self.control:
+            self.__set_control_zone()
 
         # Unpack common parameters
         self.A, self.B, self.a, self.tol = self.parameters['common']
