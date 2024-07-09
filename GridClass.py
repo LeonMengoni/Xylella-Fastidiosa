@@ -110,7 +110,6 @@ class Grid():
         self.__adjust_population()
 
     # LEVY FLIGHT DISPERSAL
-    # TODO: Vectors can be eliminated, according to a certain probability, which depends on preventive measures implemented: weeding, roguing, pesticides, etc.
     def __levy_flight_dispersal(self):
         if self.d_max is None:
             self.d_max = np.sqrt(np.floor(self.rows / 2)**2 + np.floor(self.cols / 2)**2); # about half the diagonal
@@ -141,6 +140,7 @@ class Grid():
         self.__adjust_population()
 
     # SIMULATE DIFFUSION
+    # TODO: Vectors can be eliminated, according to a certain probability, which depends on preventive measures implemented: weeding, roguing, pesticides, etc.
     def simulate(self, timesteps, parameters):
         self.timesteps = timesteps
         self.parameters = parameters
