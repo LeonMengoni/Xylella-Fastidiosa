@@ -216,7 +216,7 @@ class Grid():
         # if self.vector_pop:
         #     self.flag = False
 
-        for t in range(self.timesteps+1):
+        for t in range(1, self.timesteps+1):
             # Local growth
             self.I[t] = self.__Gompertz_local_growth(self.I[t-1])
 
@@ -226,10 +226,14 @@ class Grid():
                 self.I[t] = self.__long_distance_dispersal(self.I[t-1])
 
             elif self.dispersal_type == 'levy_flight':
+                # print(self.V[t-1])
                 self.I[t] = self.__levy_flight_dispersal(self.I[t-1], self.V[t-1])
 
                 # Adjust vector population after the evolution
-                if self.vector_pop:
+                if not self.vector_pop:
+                    self.V[t] = self.n_vectors
+
+                elif self.vector_pop:
                     self.C[t] = self.__calculate_vector_capacity(self.I[t])
                     self.V[t] = self.__adjust_vector_pop(self.V[t-1], self.C[t]) 
                     
