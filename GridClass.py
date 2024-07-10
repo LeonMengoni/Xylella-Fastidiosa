@@ -109,6 +109,16 @@ class Grid():
                         break    # OK
         self.__adjust_population()
 
+    def __set_control_measures(self):
+        rnd = np.random.random(size=self.shape)
+        control_mask = (rnd < self.BZ_eff) & self.BZ_mask # & ~self.sea_mask if want to check over whole grid
+        self.density[control_mask] = np.maximum(self.density[control_mask] - self.I[control_mask], 0) # Element-wise maximum of array elements
+        self.I[control_mask] = 0
+        self.grove_mask = self.density > 0 # update grove mask
+        self.no_grove_mask = self.density == 0 # update no grove mask
+        self.K = self.density + self.a * (1 - self.density) # update carrying capacity
+        self.K[self.sea_mask] = 0
+    
     # LEVY FLIGHT DISPERSAL
     def __levy_flight_dispersal(self):
         if self.d_max is None:
@@ -185,16 +195,20 @@ class Grid():
                 elif self.dispersal_type == 'levy_flight':
                     self.__levy_flight_dispersal()
 
+                # # Adjust vector population
+                # if self.__adjust_vector_pop:
+
             # Control efficiency in buffer zone
             if self.from_file and self.control: 
-                rnd = np.random.random(size=self.shape)
-                control_mask = (rnd < self.BZ_eff) & self.BZ_mask # & ~self.sea_mask if want to check over whole grid
-                self.density[control_mask] = np.maximum(self.density[control_mask] - self.I[control_mask], 0) # Element-wise maximum of array elements
-                self.I[control_mask] = 0
-                self.grove_mask = self.density > 0 # update grove mask
-                self.no_grove_mask = self.density == 0 # update no grove mask
-                self.K = self.density + self.a * (1 - self.density) # update carrying capacity
-                self.K[self.sea_mask] = 0
+                self.__set_control_measures()
+                # rnd = np.random.random(size=self.shape)
+                # control_mask = (rnd < self.BZ_eff) & self.BZ_mask # & ~self.sea_mask if want to check over whole grid
+                # self.density[control_mask] = np.maximum(self.density[control_mask] - self.I[control_mask], 0) # Element-wise maximum of array elements
+                # self.I[control_mask] = 0
+                # self.grove_mask = self.density > 0 # update grove mask
+                # self.no_grove_mask = self.density == 0 # update no grove mask
+                # self.K = self.density + self.a * (1 - self.density) # update carrying capacity
+                # self.K[self.sea_mask] = 0
 
             # Obtain incidence
             self.incidence[t][self.grove_mask] = self.I[self.grove_mask] / self.density[self.grove_mask]
