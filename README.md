@@ -5,6 +5,7 @@
 Xylem cells act as tubes that transport water and nutrients (sap) from the soil up to the branches and leaves. 
 The bacterium acts by obstructing the flow of nutrients through the xylem network, causing the tree to slowly die out, starting from the leaves and proceeding up to the main trunk.
 Common symptoms are leaf scorching, stunting and wilting, and a reduction in the size and quality of fruit production.
+The figures below (taken from [[1]](#1)) capture the symptoms that detail the progress of the disease in the leaves (A), branches (B) and tree canopy (C) in the olive tree and oleander, respectively.  
 
 <div align="center">
     <img src=Images/Symptoms_on_olive_trees.jpg width=277 height=200>
@@ -30,7 +31,7 @@ These insects thrive and lay eggs in weeds in the spring months.
 The young spittlebugs — nymphs — are born in the protected environment of a foam nest and, as summer approaches, they grow out of the dried out foam nest into adults.
 The nymphs have reduced mobility compared to adult vectors (which can jump up to 70 cm), and feed only on herbaceous hosts (weeds), while the latter feed also on woody hosts.
 Therefore, monitoring campaigns focus mostly, if not completely, on adult vectors. 
-The figure below (taken from [[1]](#1)) summarizes the vectors' life cycle. 
+The figure below ([[1]](#1)) summarizes the vectors' life cycle. 
 
 <div align="center">
   <img src=Images/Vector_lifecycle.jpg/ width=700 height=402>
