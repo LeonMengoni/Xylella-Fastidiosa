@@ -42,6 +42,12 @@ According to the [Food and Agriculture Organization](https://www.fao.org/in-acti
 
 
 
+## Emergency measures
+
+## Proposed model
+
+## Data and analysis
+
 ## References
 <a id="1">[1]</a>
 EFSA (European Food Safety Authority), Vos S, Camilleri M, Diakaki M, Lázaro E, Parnell S, Schenk M, Schrader G and Vicent A, 2019. Pest survey card on Xylella fastidiosa. EFSA supporting publication 2019: 16(6):EN-1667. 53 pp. doi: 10.2903/sp.efsa.2019.EN-1667
