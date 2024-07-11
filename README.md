@@ -6,6 +6,12 @@ Xylem cells act as tubes that transport water and nutrients (sap) from the soil 
 The bacterium acts by obstructing the flow of nutrients through the xylem network, causing the tree to slowly die out, starting from the leaves and proceeding up to the main trunk.
 Common symptoms are leaf scorching, stunting and wilting, and a reduction in the size and quality of fruit production.
 
+<div align="center">
+    <img src=Images/Symptoms_on_olive_trees.jpg width=152 height=202>
+    <img src=Images/Symptoms_on_oleander.jpg    width=136 height=202>
+</div>
+
+
 The effects of the disease were first discovered and reported by Newton B. Pierce in the late 19th century.
 The identification of the bacterium occurred only much later, in the 1970s.
 Since then, the bacterium and the disease have been widely studied. 
