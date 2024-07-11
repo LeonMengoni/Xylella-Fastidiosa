@@ -12,21 +12,20 @@ The figures below (taken from [[1]](#1)) capture the symptoms that detail the pr
     <img src=Images/Symptoms_on_oleander.jpg    width=305 height=200>
 </div>
 
-
 The effects of the disease were first discovered and reported by Newton B. Pierce in the late 19th century.
 The identification of the bacterium occurred only much later, in the 1970s.
 Since then, the bacterium and the disease have been widely studied. 
 
 The bacterium is typically found in areas ranging from tropical to temperate.
 It is native to the Americas, but has also been detected in Europe, the Middle East and in the Far East. 
-In the Americas, it has been responsible for Pierce's disease in grapevines, citrus variegated chlorosis and coffee leaf scorch, while in Europe it is mainly responsible for Olive Quick Decline Syndrome (OQDS). 
+In the Americas, it is responsible for Pierce's disease in grapevines, citrus variegated chlorosis and coffee leaf scorch, while in Europe it is mainly responsible for **Olive Quick Decline Syndrome** (OQDS). 
 In 2013 it was detected in the southern region of Puglia, in Italy, and has since spread all over the Salentine peninsula (the "heel" of the "boot").
 
 There are multiple strains of the bacteria: _Xylella fastidiosa_ subsp. _fastidiosa_, subsp. _pauca_, subsp. _multiplex_, subsp. _sandyi_, etc.
-The strain that is prevalent in Puglia is the _pauca_ subspecies. 
+The strain that is prevalent in Puglia is the **_pauca_** subspecies. 
 
 The bacterium is spread by spittlebugs, froghoppers and sharpshooter leafhoppers, which are all xylem sap-feeding insects. 
-Philaenus spumarius, the meadow froghopper or spittlebug, is considered the most important vector in Italy and in the EU, since it is the only one (proven so far) to transmit the bacterium in natural conditions.
+**Philaenus spumarius**, the meadow froghopper or spittlebug, is considered the most important vector in Italy and in the EU, since it is the only one (proven so far) to transmit the bacterium in natural conditions.
 These insects thrive and lay eggs in weeds in the spring months.
 The young spittlebugs — nymphs — are born in the protected environment of a foam nest and, as summer approaches, they grow out of the dried out foam nest into adults.
 The nymphs have reduced mobility compared to adult vectors (which can jump up to 70 cm), and feed only on herbaceous hosts (weeds), while the latter feed also on woody hosts.
@@ -36,6 +35,12 @@ The figure below ([[1]](#1)) summarizes the vectors' life cycle.
 <div align="center">
   <img src=Images/Vector_lifecycle.jpg/ width=700 height=402>
 </div>
+
+There are hundreds of plants (belonging to different families) that are susceptible to the bacterium, according to data collected by the European Food Safety Authority (EFSA).
+Not all plants are susceptible to all strains of the bacteria, and incubation periods/latency times (delay between infection time and onset of symptoms) vary across host species.
+According to the [Food and Agriculture Organization](https://www.fao.org/in-action/saving-mediterranean-olives/en/#:~:text=Xylella%20fastidiosa%3A%20a%20spreading%20threat&text=The%20disease%20is%20difficult%20to,to%20more%20than%20a%20year.) (FAO), the incubation period of the bacteria can last from 7 months to more than a year, further complicating their detection and the implementation of preventive measures.
+
+
 
 ## References
 <a id="1">[1]</a>
