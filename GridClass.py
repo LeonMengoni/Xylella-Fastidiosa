@@ -76,8 +76,15 @@ class Grid():
         elif self.kernel_type == "gaussian":
             self.kernel = np.exp(-(X**2 + Y**2)/(2 * self.beta**2)) / np.sqrt(2 * np.pi * self.beta**2)
         
-        elif self.kernel_type == "levy_flight":
-            self.kernel = (1 - self.alpha) / (self.d_max**(1 - self.alpha) - self.d_min**(1 - self.alpha)) * (X**2 + Y**2)**(-self.mu / 2)
+    def __set_levy_flight_kernel(self):
+        y = np.linspace(-(self.rows-1), (self.rows-1), 2*self.rows-1)
+        x = np.linspace(-(self.cols-1), (self.cols-1), 2*self.cols-1)
+        Y, X = np.meshgrid(y, x)
+        Y[Y == 0] = 1
+        X[X == 0] = 1
+
+        # self.kernel = (1 - self.alpha) / (self.d_max**(1 - self.alpha) - self.d_min**(1 - self.alpha)) * (X**2 + Y**2)#**(-self.alpha / 2)
+        self.kernel = (X**2 + Y**2)**(-self.alpha / 2)
 
     def __adjust_population(self, I):
         I[self.no_grove_mask] = 0
@@ -90,8 +97,8 @@ class Grid():
         I = self.__adjust_population(I)
         return I
 
-    # SHORT DISTANCE DISPERSAL
-    def __short_distance_dispersal(self, I):
+    # KERNEL DISPERSAL
+    def __kernel_convolution(self, I):
         I = sp.signal.convolve(I, self.kernel, mode="same", method="fft")
         I = self.__adjust_population(I)
         return I
@@ -116,20 +123,37 @@ class Grid():
         I = self.__adjust_population(I)
         return I
 
+    def __set_control_measures(self, I):
+        rnd = np.random.random(size=self.shape)
+        control_mask = (rnd < self.BZ_eff) & self.BZ_mask # & ~self.sea_mask if want to check over whole grid
+        self.density[control_mask] = np.maximum(self.density[control_mask] - I[control_mask], 0) # Element-wise maximum of array elements
+        I[control_mask] = 0
+        self.grove_mask = self.density > 0 # update grove mask
+        self.no_grove_mask = self.density == 0 # update no grove mask
+        self.K = self.density + self.a * (1 - self.density) # update carrying capacity
+        self.K[self.sea_mask] = 0
+        return I
+
+    def __evaluate_incidence(self, I):
+        incidence = np.zeros(I.shape)
+        incidence[self.grove_mask] = I[self.grove_mask] / self.density[self.grove_mask]
+        incidence[self.sea_mask] = -9999
+        incidence[self.no_grove_mask] = 0
+        return incidence
+
     # SIMULATE DIFFUSION
     def simulate(self, timesteps, parameters):
         self.timesteps = timesteps
         self.parameters = parameters
         
-        self.incidence = np.zeros((self.timesteps+1, self.rows, self.cols)) # Fraction of infected trees
-        self.I = np.zeros((self.timesteps+1, self.rows, self.cols)) # Number of infected trees (absolute density, maximum for a generic cell is self.density for that cell)
-
-        # Define control zone parameters
+        ################################################################################
+        # UNPACK PARAMETERS AND SET UP
+        # Control Zone (CZ) parameters
         self.control, self.EZW, self.BZW, self.BZ_eff = self.parameters['control_zone']
         if self.from_file and self.control:
             self.__set_control_zone()
-
-        # Unpack common parameters
+        
+        # Common parameters
         self.A, self.B, self.a, self.tol = self.parameters['common']
         self.K = self.density + self.a * (1 - self.density) # carrying capacity
         self.K[self.sea_mask] = 0
@@ -137,42 +161,44 @@ class Grid():
         # Dispersal type
         self.dispersal_type, = self.parameters['dispersal']
 
-        # Unpack parameters for different dispersal types
+        # Short + long kernel
         if self.dispersal_type == 'short_long':
             self.beta, self.kernel_type, self.disp_tol, self.M_max, self.D = parameters[self.dispersal_type]
             self.__set_short_distance_kernel()
 
         elif self.dispersal_type == 'levy_flight':
-            self.n_vectors, self.d_min, self.d_max, self.alpha, self.sample = parameters[self.dispersal_type]
-            self.vector_positions = np.full((self.n_vectors,2), self.seed, dtype=int)
-        
+            self.d_min, self.d_max, self.alpha = parameters[self.dispersal_type]
+            self.__set_levy_flight_kernel()
+
+        ################################################################################
+        # DEFINE DATA ARRAYS
+        self.I = np.zeros((self.timesteps+1, self.rows, self.cols)) # Number of infected trees (absolute density, maximum for a generic cell is self.density for that cell)
+        self.incidence = self.I.copy() # Fraction of infected trees
+
+        ################################################################################
+        # SET INITIAL (t=0) CONDITIONS
         self.I[0][tuple(self.seed)] = self.K[tuple(self.seed)] * np.exp(-self.B)
+        self.incidence[0] = self.__evaluate_incidence(self.I[0])
 
-        # initiate evolution
-        for t in range(self.incidence.shape[0]):
-            if t > 0:
-                # Local growth
-                self.I[t] = self.__Gompertz_local_growth(self.I[t-1])
+        ################################################################################
+        # INITIATE EVOLUTION
+        for t in range(1, self.timesteps + 1):
+            # Local growth
+            self.I[t] = self.__Gompertz_local_growth(self.I[t-1])
 
-                if self.dispersal_type == 'short_long':
-                    self.I[t] = self.__short_distance_dispersal(self.I[t])
-                    self.I[t] = self.__long_distance_dispersal(self.I[t])
+            if self.dispersal_type == 'short_long':
+                self.I[t] = self.__kernel_convolution(self.I[t])
+                self.I[t] = self.__long_distance_dispersal(self.I[t])
+            
+            elif self.dispersal_type == 'levy_flight':
+                self.I[t] = self.__kernel_convolution(self.I[t])
 
             # Control efficiency in buffer zone
             if self.from_file and self.control: 
-                rnd = np.random.random(size=self.shape)
-                control_mask = (rnd < self.BZ_eff) & self.BZ_mask # & ~self.sea_mask if want to check over whole grid
-                self.density[control_mask] = np.maximum(self.density[control_mask] - self.I[t][control_mask], 0) # Element-wise maximum of array elements
-                self.I[t][control_mask] = 0
-                self.grove_mask = self.density > 0 # update grove mask
-                self.no_grove_mask = self.density == 0 # update no grove mask
-                self.K = self.density + self.a * (1 - self.density) # update carrying capacity
-                self.K[self.sea_mask] = 0
+                self.I[t] = self.__set_control_measures(self.I[t])
 
             # Obtain incidence
-            self.incidence[t][self.grove_mask] = self.I[t][self.grove_mask] / self.density[self.grove_mask]
-            self.incidence[t][self.sea_mask] = -9999
-            self.incidence[t][self.no_grove_mask] = 0
+            self.incidence[t] = self.__evaluate_incidence(self.I[t])
 
     def evaluate_risk(self, N, timesteps, parameters): # average incidence over N simulations
         self.N = N
