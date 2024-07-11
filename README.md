@@ -7,8 +7,8 @@ The bacterium acts by obstructing the flow of nutrients through the xylem networ
 Common symptoms are leaf scorching, stunting and wilting, and a reduction in the size and quality of fruit production.
 
 <div align="center">
-    <img src=Images/Symptoms_on_olive_trees.jpg width=152 height=202>
-    <img src=Images/Symptoms_on_oleander.jpg    width=136 height=202>
+    <img src=Images/Symptoms_on_olive_trees.jpg width=277 height=200>
+    <img src=Images/Symptoms_on_oleander.jpg    width=305 height=200>
 </div>
 
 
