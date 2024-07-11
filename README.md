@@ -25,4 +25,9 @@ The young spittlebugs — nymphs — are born in the protected environment of a 
 The nymphs have reduced mobility compared to adult vectors (which can jump up to 70 cm), and feed only on herbaceous hosts (weeds), while the latter feed also on woody hosts.
 Therefore, monitoring campaigns focus mostly, if not completely, on adult vectors. 
 
+<div align="center">
+  <img src=Images/Vector_lifecycle.jpg/ width=400 height=372>
+</div>
+
+
 
