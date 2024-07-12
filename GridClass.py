@@ -105,7 +105,7 @@ class Grid():
                     elif self.sea_mask[tuple(new_cell)]:                                        continue # Sea
                     elif self.no_grove_mask[tuple(new_cell)]:                                   break    # No grove, OK
                     else:
-                        self.I[tuple(new_cell)] += (1 - self.I[tuple(new_cell)]) * np.exp(-self.B) # Added the 1-I part to say that the remaining susceptible are infected with probability exp(-B) 
+                        self.I[tuple(new_cell)] += (1 - self.I[tuple(   new_cell)]) * np.exp(-self.B) # Added the 1-I part to say that the remaining susceptible are infected with probability exp(-B) 
                         break    # OK
         self.__adjust_population()
 
