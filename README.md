@@ -50,7 +50,7 @@ According to the [Food and Agriculture Organization](https://www.fao.org/in-acti
 
 ## Emergency measures in Apulia
 
-The _pauca_ strain of the bacterium was first detected in 2013 in the province of Lecce, in Salento, but studies suggest that it was introduced between 2008 and 2010 through the port of Gallipoli.
+The _pauca_ strain of the bacterium was first detected in 2013 in the province of Lecce, in Salento, but studies suggest that it was introduced between 2008 and 2010 through the port of Gallipoli (Kottelenberg et al, 2021).
 Since its initial detection, the bacterium has caused the death of an estimated 21 million olive trees, out of a total population of about 60 million, resulting in a 50% reduction of olive oil production and an estimated economic loss of €1.6 billion ([[3]](#3)).
 Emergency measures implemented in Apulia vary according to the demarcated zones.
 
@@ -148,7 +148,15 @@ The parameter here is therefore only $\lbrace s\rbrace$.
 
 ## Data and analysis
 
+### 1. Estimation of bacteria spread speed
+In a paper by Kottelebnerg, Saponari (2021), the speed was estimated as 10.0 km per year (95% confidence interval: 7.5–12.5 km per year). 
+### 2. Obtain parameters from least squares method by comparing data speed to simulation speed
+### 3. Introduction of latency period 
+In White (2020), the incubation period (infected but asymptomatic, and negligible to no infectivity) is estimated with Bayesian methods at 1.2 years (1-1.3 95% credibility interval).
+
 **Definition of risk**
+
+## Summary of other main results and findings 
 
 ## References
 <a id="1">[1]</a>
