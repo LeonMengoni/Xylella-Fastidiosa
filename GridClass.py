@@ -43,7 +43,7 @@ class Grid():
             grove_coordinates = np.argwhere(self.grove_mask)
             self.seed = grove_coordinates[np.random.choice(grove_coordinates.shape[0])] # Random seed
 
-    def __set_control_zone(self): 
+    def __set_control_zone(self): # define the EZ and BZ
         xp1, yp1 = [253, 212]
         xp2, yp2 = [278, 183]
 
@@ -61,9 +61,9 @@ class Grid():
                 elif y < m*x+B2_erad and y > m*x+B2_rog and self.density[y,x] >= 0:
                     self.BZ_mask[y,x] = True
         
-        self.density[self.EZ_mask] = 0 # eradicate all trees in EZ
-        self.grove_mask = self.density > 0
-        self.no_grove_mask = self.density == 0
+        # self.density[self.EZ_mask] = 0 # eradicate all trees in EZ
+        # self.grove_mask = self.density > 0
+        # self.no_grove_mask = self.density == 0
 
     def __set_short_distance_kernel(self):
         y = np.linspace(-(self.rows-1), (self.rows-1), 2*self.rows-1)
@@ -125,9 +125,15 @@ class Grid():
 
     def __set_control_measures(self, I):
         rnd = np.random.random(size=self.shape)
-        control_mask = (rnd < self.BZ_eff) & self.BZ_mask # & ~self.sea_mask if want to check over whole grid
-        self.density[control_mask] = np.maximum(self.density[control_mask] - I[control_mask], 0) # Element-wise maximum of array elements
-        I[control_mask] = 0
+        EZ_control_mask = (rnd < self.EZ_eff) & self.EZ_mask # if EZ_eff = 1, EZ_control_mask = EZ_mask
+        BZ_control_mask = (rnd < self.BZ_eff) & self.BZ_mask # & ~self.sea_mask if want to check over whole grid
+    
+        self.density[EZ_control_mask] = np.maximum(self.density[EZ_control_mask] - I[EZ_control_mask], 0) # Element-wise maximum of array elements    
+        self.density[BZ_control_mask] = np.maximum(self.density[BZ_control_mask] - I[BZ_control_mask], 0) 
+        
+        I[EZ_control_mask] = 0
+        I[BZ_control_mask] = 0
+
         self.grove_mask = self.density > 0 # update grove mask
         self.no_grove_mask = self.density == 0 # update no grove mask
         self.K = self.density + self.a * (1 - self.density) # update carrying capacity
@@ -149,7 +155,7 @@ class Grid():
         ################################################################################
         # UNPACK PARAMETERS AND SET UP
         # Control Zone (CZ) parameters
-        self.control, self.EZW, self.BZW, self.BZ_eff = self.parameters['control_zone']
+        self.control, self.EZW, self.BZW, self.EZ_eff, self.BZ_eff = self.parameters['control_zone']
         if self.from_file and self.control:
             self.__set_control_zone()
         
