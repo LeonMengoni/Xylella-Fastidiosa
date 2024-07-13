@@ -48,9 +48,10 @@ According to the [Food and Agriculture Organization](https://www.fao.org/in-acti
 
 
 
-## Emergency measures
+## Emergency measures in Apulia
 
-Since the initial detection in 2013 of the _pauca_ strain of the bacterium near Gallipoli, in southern Salento, the disease has caused the death of an estimated 21 million olive trees, from a total population of about 60 million, resulting in a 50% reduction of olive oil production and an estimated economic loss of €1.6 billion ([[3]](#3)).
+The _pauca_ strain of the bacterium was first detected in 2013 in the province of Lecce, in Salento, but studies suggest that it was introduced between 2008 and 2010 through the port of Gallipoli.
+Since its initial detection, the bacterium has caused the death of an estimated 21 million olive trees, out of a total population of about 60 million, resulting in a 50% reduction of olive oil production and an estimated economic loss of €1.6 billion ([[3]](#3)).
 Emergency measures implemented in Apulia vary according to the demarcated zones.
 
 In the **infected zone** (_zona infetta_ in Italian), which includes the provinces of Lecce, Brindisi and part of Taranto, the disease cannot be eliminated and there is no mandate to eradicate infected plants. 
