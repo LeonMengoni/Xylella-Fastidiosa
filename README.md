@@ -85,7 +85,7 @@ With this in mind, research is focusing on:
 
 To study the spatial spread of the disease, we adopted the model proposed by White et al. in their 2017 paper ([[1]](#1)).
 
-The model runs over a $1 \textrm{km}^2$ resolution grid of the Apulia region, with a temporal scale of 1 year, which accounts for the seasonality of the vector's lifecycle. 
+The model runs over a 1km² resolution grid of the Apulia region, with a temporal scale of 1 year, which accounts for the seasonality of the vector's lifecycle. 
 Spreading occurs in two phases: local growth within a cell and spatial spread between cells. 
 Control mesasures are implemented only in the control zone (CZ). 
 
@@ -97,7 +97,7 @@ $$
 I_{t+1}(x,y) = K(x,y) \left(\frac{I_t(x,y)}{K(x,y)}\right)^{\textrm{e}^{-A}}
 $$
 
-where $A$ is the rate of population growth, $B$ is related to the initial proportion of plants that are infected, and $K(x,y) = d(x,y) + a(1 - d(x,y))$ is the carrying capacity; $d(x,y)$ is the proportional cover/density of olive groves in a $1 \textrm{km}^2$ grid cell, and $a\in[0,1]$ is the carrying capacity in non-olive grove habitat, relative to that in olive groves. 
+where $A$ is the rate of population growth, $B$ is related to the initial proportion of plants that are infected, and $K(x,y) = d(x,y) + a(1 - d(x,y))$ is the carrying capacity; $d(x,y)$ is the proportional cover/density of olive groves in a 1km² grid cell, and $a\in[0,1]$ is the carrying capacity in non-olive grove habitat, relative to that in olive groves. 
 Here, $I_t(x,y)$ is the density of infected trees, such that $I_t(x,y)\in[0, d(x,y)]$. 
 The incidence is therefore defined as $\textrm{incidence} = \frac{I_t(x,y)}{d(x,y)}$.
 
