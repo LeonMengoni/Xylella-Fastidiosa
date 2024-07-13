@@ -206,12 +206,6 @@ class Grid():
         self.parameters = parameters
 
         self.all_incidences = np.zeros((self.N, self.timesteps+1, self.rows, self.cols))
-        # self.risk = np.zeros((self.timesteps+1, self.rows, self.cols))
-        # self.final_incidence = np.zeros((self.N, self.rows, self.cols))
-
-        # for i in range(N):
-        #     self.simulate(self.timesteps, self.parameters)
-        #     self.final_incidence[i] = self.incidence[-1]
 
         for i in range(N):
             self.simulate(self.timesteps, self.parameters)
