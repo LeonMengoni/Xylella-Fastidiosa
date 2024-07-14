@@ -17,7 +17,7 @@ class Grid():
             
         else: # generate
             if shape is None:
-                raise ValueError("Shape must be provided")
+                raise ValueError('Shape must be provided')
             self.from_file = False # set flag
             self.shape = shape
             self.density = np.random.random(self.shape)
@@ -70,10 +70,10 @@ class Grid():
         x = np.linspace(-(self.cols-1), (self.cols-1), 2*self.cols-1)
         Y, X = np.meshgrid(y, x)
         
-        if self.kernel_type == "exponential":
+        if self.kernel_type == 'exponential':
             self.kernel = np.exp(-(X**2 + Y**2)**(1/2) / self.beta)
 
-        elif self.kernel_type == "gaussian":
+        elif self.kernel_type == 'gaussian':
             self.kernel = np.exp(-(X**2 + Y**2)/(2 * self.beta**2)) / np.sqrt(2 * np.pi * self.beta**2)
         
     def __set_levy_flight_kernel(self):
@@ -99,7 +99,7 @@ class Grid():
 
     # KERNEL DISPERSAL
     def __kernel_convolution(self, I):
-        I = sp.signal.convolve(I, self.kernel, mode="same", method="fft")
+        I = sp.signal.convolve(I, self.kernel, mode='same', method='fft')
         I = self.__adjust_population(I)
         return I
 
@@ -226,13 +226,13 @@ class Grid():
 
         fig, ax = plt.subplots(figsize=figsize)
         im = ax.imshow(self.kernel, norm=logNorm)
-        if self.kernel_type == "exponential":   ax.set_title("Exponential short distance kernel")
-        elif self.kernel_type == "gaussian":    ax.set_title("Gaussian short distance kernel")
+        if self.kernel_type == 'exponential':   ax.set_title('Exponential short distance kernel')
+        elif self.kernel_type == 'gaussian':    ax.set_title('Gaussian short distance kernel')
         fig.colorbar(im, ax=ax)
         plt.show()
 
     def plot_density(self, figsize=(6,6)):
-        cmap_custom = colors.LinearSegmentedColormap.from_list("", ["yellow", "forestgreen", "darkgreen"]) # grove density color map
+        cmap_custom = colors.LinearSegmentedColormap.from_list('', ['yellow', 'forestgreen', 'darkgreen']) # grove density color map
 
         im = np.ma.array(self.density, mask=self.sea_mask)
         im_sea = np.ma.array(self.density, mask=~self.sea_mask)
@@ -241,7 +241,7 @@ class Grid():
         im_list = [im, im_sea, im_no_grove]
         color_list = ['tab:blue', 'black']
         cmap_list = [cmap_custom] + [colors.ListedColormap([color]) for color in color_list]
-        label_list = ["Sea", "No groves"]
+        label_list = ['Sea', 'No groves']
 
         if self.control and self.from_file:
             im_EZ = np.ma.array(self.density, mask=~self.EZ_mask)
@@ -250,44 +250,44 @@ class Grid():
             new_colors = ['red', 'orange']
             color_list += new_colors
             cmap_list += [colors.ListedColormap([color]) for color in new_colors]
-            label_list += ["Eradication zone (EZ)", "Buffer zone (BZ)"]
+            label_list += ['Eradication zone (EZ)', 'Buffer zone (BZ)']
 
         fig, ax = plt.subplots(figsize=figsize)
         images = []
         for im, cmap in zip(im_list, cmap_list):
             images.append(ax.imshow(im, cmap=cmap, interpolation=None))
 
-        ax.set_title("Olive Groves Density")
-        cbar = fig.colorbar(images[0], ax=ax, orientation="horizontal")
-        cbar.set_label("Grove density")
+        ax.set_title('Olive Groves Density')
+        cbar = fig.colorbar(images[0], ax=ax, orientation='horizontal')
+        cbar.set_label('Grove density')
         patches = [mpatches.Patch(color=color_list[i], label=label_list[i]) for i in range(len(im_list)-1)]
-        plt.legend(handles=patches, loc="upper right")
+        plt.legend(handles=patches, loc='upper right')
 
         plt.show()
 
     def plot_incidence(self, figsize=(6,6)):
         # Attributes for plot
-        cmap_inferno = mpl.colormaps["inferno"]
-        cmap_inferno.set_under("tab:blue")
+        cmap_inferno = mpl.colormaps['inferno']
+        cmap_inferno.set_under('tab:blue')
 
         for t in range(len(self.incidence)):
             # Plot incidence for all times starting at 0
             fig, ax = plt.subplots(figsize=figsize)
-            ax.set_title(f"Timestep {t}")
+            ax.set_title(f'Timestep {t}')
             im = ax.imshow(self.incidence[t], cmap=cmap_inferno, norm=colors.Normalize(vmin=0, vmax=1))
-            cbar = fig.colorbar(im, ax=ax, orientation="horizontal")
-            cbar.set_label("Disease incidence")
+            cbar = fig.colorbar(im, ax=ax, orientation='horizontal')
+            cbar.set_label('Disease incidence')
             plt.show()
 
     def plot_final_incidence(self, figsize=(6,6)):
         # Attributes for plot
-        cmap_inferno = mpl.colormaps["inferno"]
+        cmap_inferno = mpl.colormaps['inferno']
         im_sea = np.ma.array(self.density, mask=~self.sea_mask)
 
         fig, ax = plt.subplots(figsize=figsize)
-        ax.set_title(f"Final timestep {self.timesteps}")
+        ax.set_title(f'Final timestep {self.timesteps}')
         im = ax.imshow(self.incidence[-1], cmap=cmap_inferno, norm=colors.Normalize(vmin=0, vmax=1))
         ax.imshow(im_sea, cmap=colors.ListedColormap(['tab:blue']), interpolation=None)
-        cbar = fig.colorbar(im, ax=ax, orientation="horizontal")
-        cbar.set_label("Disease incidence")
+        cbar = fig.colorbar(im, ax=ax, orientation='horizontal')
+        cbar.set_label('Disease incidence')
         plt.show()
