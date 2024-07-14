@@ -206,7 +206,7 @@ class Grid():
             # Obtain incidence
             self.incidence[t] = self.__evaluate_incidence(self.I[t])
 
-    def evaluate_risk(self, N, timesteps, parameters): # average incidence over N simulations
+    def evaluate_risk(self, N, timesteps, parameters, verbose=True): # average incidence over N simulations
         self.N = N
         self.timesteps = timesteps
         self.parameters = parameters
@@ -214,6 +214,8 @@ class Grid():
         self.all_incidences = np.zeros((self.N, self.timesteps+1, self.rows, self.cols))
 
         for i in range(N):
+            if verbose:
+                print(f'Simulating run {i+1} of {N}...')
             self.simulate(self.timesteps, self.parameters)
             self.all_incidences[i] = self.incidence
         
