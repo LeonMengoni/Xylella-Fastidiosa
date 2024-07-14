@@ -158,6 +158,9 @@ In White (2020), the incubation period (infected but asymptomatic, and negligibl
 
 ## Summary of other main results and findings 
 
+White et al, 2017
+Kottelenberg et al, 2021
+
 ## References
 <a id="1">[1]</a>
 White SM, Bullock JM, Hooftman DAP, Chapman DS. _Modelling the spread and control of Xylella fastidiosa in the early stages of invasion in Apulia, Italy._ Biol Invasions. 2017;19(6):1825-1837. doi: 10.1007/s10530-017-1393-5. Epub 2017 Feb 21. PMID: 32025190; PMCID: PMC6979717.
