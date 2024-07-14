@@ -150,6 +150,11 @@ The parameter here is therefore only $\lbrace s\rbrace$.
 
 ### 1. Estimation of bacteria spread speed
 In a paper by Kottelebnerg, Saponari (2021), the speed was estimated as 10.0 km per year (95% confidence interval: 7.5–12.5 km per year). 
+
+We use as method a simple linear regression over maximum distances from the epicentre over time. 
+We get an estimate for the speed over all years (2013-2023) or only over the first 4 years of samples (2013-2016).
+
+An alternative method could be to use Kottelennerg's method with a logistic function. 
 ### 2. Obtain parameters from least squares method by comparing data speed to simulation speed
 ### 3. Introduction of latency period 
 In White (2020), the incubation period (infected but asymptomatic, and negligible to no infectivity) is estimated with Bayesian methods at 1.2 years (1-1.3 95% credibility interval).
