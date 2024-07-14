@@ -265,7 +265,7 @@ class Grid():
 
         plt.show()
 
-    def plot_incidence(self, figsize=(6,6)):
+    def plot_incidence(self, zoom=False, figsize=(6,6)):
         # Attributes for plot
         cmap_inferno = mpl.colormaps['inferno']
         cmap_inferno.set_under('tab:blue')
@@ -274,7 +274,10 @@ class Grid():
             # Plot incidence for all times starting at 0
             fig, ax = plt.subplots(figsize=figsize)
             ax.set_title(f'Timestep {t}')
-            im = ax.imshow(self.incidence[t], cmap=cmap_inferno, norm=colors.Normalize(vmin=0, vmax=1))
+            if zoom:
+                im = ax.imshow(self.incidence[t,150:,200:], cmap=cmap_inferno, norm=colors.Normalize(vmin=0, vmax=1))
+            else: 
+                im = ax.imshow(self.incidence[t], cmap=cmap_inferno, norm=colors.Normalize(vmin=0, vmax=1))
             cbar = fig.colorbar(im, ax=ax, orientation='horizontal')
             cbar.set_label('Disease incidence')
             plt.show()
