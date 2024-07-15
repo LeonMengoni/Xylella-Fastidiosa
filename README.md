@@ -183,7 +183,7 @@ $$
 \begin{aligned}
 \overline{M}\_{out}(x,y) & = \frac{M_{max}}{2}\cdot P(\rho I_t(x,y) > p) \\
 & = \frac{M_{max}}{2}\cdot (1 - P(\rho I_t(x,y) < p)) \\
-& = \frac{M_{max}}{2} \left[1 - \frac{p}{d(x,y)}\left(\ - \text{log}\frac{p}{d(x,y)}\right)\right]
+& = \frac{M_{max}}{2} \left[1 - \frac{p}{d(x,y)}\left(1 - \text{log}\frac{p}{d(x,y)}\right)\right]
 \end{aligned}
 $$
 
