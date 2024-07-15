@@ -305,32 +305,29 @@ class Grid():
 
         plt.show()
 
-    def plot_incidence(self, zoom=False, figsize=(6,6)):
-        # Attributes for plot
+    def plot_incidence(self, risk=False, zoom=False, final=False, figsize=(6,6)):
         cmap_inferno = mpl.colormaps['inferno']
         cmap_inferno.set_under('tab:blue')
 
-        for t in range(len(self.incidence)):
-            # Plot incidence for all times starting at 0
+        if not final:
+            for t in range(self.timesteps+1):
+                # Plot incidence (or risk) for all times starting at 0
+                fig, ax = plt.subplots(figsize=figsize)
+                ax.set_title(f'Timestep {t}')
+                if risk:    to_plot = self.risk[t]
+                else:       to_plot = self.incidence[t]
+                if zoom:    to_plot = to_plot[150:,200:]
+                im = ax.imshow(to_plot, cmap=cmap_inferno, norm=colors.Normalize(vmin=0, vmax=1))
+                cbar = fig.colorbar(im, ax=ax, orientation='horizontal')
+                cbar.set_label('Disease incidence')
+                plt.show()
+        else:
             fig, ax = plt.subplots(figsize=figsize)
-            ax.set_title(f'Timestep {t}')
-            if zoom:
-                im = ax.imshow(self.incidence[t,150:,200:], cmap=cmap_inferno, norm=colors.Normalize(vmin=0, vmax=1))
-            else: 
-                im = ax.imshow(self.incidence[t], cmap=cmap_inferno, norm=colors.Normalize(vmin=0, vmax=1))
+            ax.set_title(f'Final timestep {self.timesteps}')
+            if risk:    to_plot = self.risk[-1]
+            else:       to_plot = self.incidence[-1]
+            if zoom:    to_plot = to_plot[150:,200:]
+            im = ax.imshow(to_plot, cmap=cmap_inferno, norm=colors.Normalize(vmin=0, vmax=1))
             cbar = fig.colorbar(im, ax=ax, orientation='horizontal')
             cbar.set_label('Disease incidence')
             plt.show()
-
-    def plot_final_incidence(self, figsize=(6,6)):
-        # Attributes for plot
-        cmap_inferno = mpl.colormaps['inferno']
-        im_sea = np.ma.array(self.density, mask=~self.sea_mask)
-
-        fig, ax = plt.subplots(figsize=figsize)
-        ax.set_title(f'Final timestep {self.timesteps}')
-        im = ax.imshow(self.incidence[-1], cmap=cmap_inferno, norm=colors.Normalize(vmin=0, vmax=1))
-        ax.imshow(im_sea, cmap=colors.ListedColormap(['tab:blue']), interpolation=None)
-        cbar = fig.colorbar(im, ax=ax, orientation='horizontal')
-        cbar.set_label('Disease incidence')
-        plt.show()
