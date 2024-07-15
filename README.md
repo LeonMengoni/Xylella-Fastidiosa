@@ -133,10 +133,52 @@ If $u(x,y) > p$ ($p$ sets a threshold probability), then the cell $(x,y)$ random
 Finally, a cell that is reached by one of the random dispersers is further infected according to the initial proportion of infected according to the Gompertz function:
 
 $$
-\Delta I_{t}(x,y) = (1 - I_{t}(x,y))\textrm{e}^{-B}
+\Delta I_t(x,y) = (1 - I_t(x,y))\textrm{e}^{-B}
 $$
 
 The parameters were set as $\lbrace p = 0.2, M_{max} = 5, D = 20\rbrace$.
+
+**FROM HERE NEW**
+
+Now, we want to find an analytical expression for the long-distance kernel. 
+The evolution is written as: 
+
+$$
+\begin{aligned}
+I_{t+1}(x,y) & = I_t(x,y) + \Delta I_t(x,y) \\
+& = I_t(x,y) + \overline{M}_{in}(x,y)\cdot(1 - I_t(x,y))e^{-B}
+\end{aligned}
+$$
+
+where $\overline{M}_{in}(x,y)$ is the average number of dispersers jumping into the cell $(x,y)$. 
+This term can be written in the following way:
+
+$$
+\overline{M}_{in}(x,y) = \sum
+$$
+
+The long-distance kernel can be written in the following way:
+
+$$
+\begin{aligned}
+I_{t+1}(x,y) & = \sum_{i=1}^W\sum_{j=1}^H p(x-i,y-j) \cdot (1 - I_t(i,j)) \cdot \textrm{e}^{-B} + I_t(x,y) \\
+& = \sum_{i=1}^W\sum_{j=1}^H p(x-i,y-j) \cdot (1 - I_t(i,j)) \cdot \textrm{e}^{-B} + I_t(x,y)
+\end{aligned}
+$$
+
+where $p(x-i,y-j)$ is the probability that a bacteria-carrying vector disperses from $(i,j)$ to $(x,y)$, moving the distance $(x-i, y-j)$. This can be written as
+
+$$
+p(x-i, y-j) = p_N(x-i, y-j) \cdot M
+$$
+
+where is the probability of jumping that distance according to a gaussian/normal distribution, while $M$ is the number of dispersers. In practice, instead of using $M$, we use $\mathbb{E}[M]$. This term is calculated as:
+
+$$
+\mathbb{E}[M](x,y) = \frac{M_{max}}{2}\left[1 - \frac{p}{d(x,y)}\left(1 - \textrm{log}\frac{p}{d(x,y)}\right)\right]
+$$
+
+where $d(x,y)$ is the usual density of olive groves in cell (x,y). 
 
 ### 3. Control measures
 
@@ -144,7 +186,7 @@ In the model, the demarcated areas are subdivided in a slightly different way. W
 Control measures are implemented only in the eradication and buffer zones, which together form the control zone (CZ). 
 In this zone, we assign a probability of infection detection $p_{detect}(x,y)\sim\mathcal{U}[0,1]$ to every cell.
 If the surveillance efficiency $s\in[0,1]$ (given as a parameter) is greater than the detection probability ($s > p_{detect}$), the infected trees in the cell are eradicated and not replaced.
-The surveillance efficiency in the two zones within the control zone may vary: for example, it can be higher in the eradication zone and lower in the bufer zone.   
+The surveillance efficiency in the two zones within the control zone may vary: for example, it can be higher in the eradication zone and lower in the buffer zone.   
 
 The parameter here is therefore only $\lbrace s\rbrace$.
 
