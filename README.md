@@ -87,19 +87,36 @@ To study the spatial spread of the disease, we adopted the model proposed by Whi
 
 The model runs over a 1km² resolution grid of the Apulia region, with a temporal scale of 1 year, which accounts for the seasonality of the vector's lifecycle. 
 Spreading occurs in two phases: local growth within a cell and spatial spread between cells. 
-Control mesasures are implemented only in the control zone (CZ). 
+Control mesasures are implemented only in the control zone. 
+
+In practice, in the code we apply the different steps consecutively, therefore updating the infectious population step-by-step.
+In other words, for every timestep $t$: 
+
+$$
+I_t \rightarrow I^G_{t+1} \rightarrow I^S_{t+1} \rightarrow I^L_{t+1} \rightarrow
+\begin{cases}
+I_{t+1} & \text{if no control measures}\\
+I^C_{t+1} \rightarrow I_{t+1} & \text{if control measures}
+\end{cases}
+$$
+
+where $G$ recalls the local growth, $S$ the short-distance dispersal, $L$ the long-distance dispersal and $C$ the application of control measures. 
 
 ### 1. Local growth
 
-Local growth of the density of infected trees is modeled by the Gompertz function $I(t) = K \textrm{e}^{-B\textrm{e}^{-At}}$, which, when discretized on an annual time scale, is written as:
+Local growth of the density of infected trees is modeled by the Gompertz function $I^G(t) = K \textrm{e}^{-B\textrm{e}^{-At}}$, which, when discretized on an annual time scale, is written as:
 
 $$
-I_{t+1}(x,y) = K(x,y) \left(\frac{I_t(x,y)}{K(x,y)}\right)^{\textrm{e}^{-A}}
+I^G_{t+1}(x,y) = K(x,y) \left(\frac{I_t(x,y)}{K(x,y)}\right)^{\textrm{e}^{-A}} = f(I_t(x,y))
 $$
 
 where $A$ is the rate of population growth, $B$ is related to the initial proportion of plants that are infected, and $K(x,y) = d(x,y) + a(1 - d(x,y))$ is the carrying capacity; $d(x,y)$ is the proportional cover/density of olive groves in a 1km² grid cell, and $a\in[0,1]$ is the carrying capacity in non-olive grove habitat, relative to that in olive groves. 
 Here, $I_t(x,y)$ is the density of infected trees, such that $I_t(x,y)\in[0, d(x,y)]$. 
-The incidence is therefore defined as incidence = $\frac{I_t(x,y)}{d(x,y)}$.
+The incidence is therefore defined as: 
+
+$$
+i_t(x,y) = \frac{I_t(x,y)}{d(x,y)}
+$$
 
 The Gompertz function parameters have been fitted on the data, yielding the values $\lbrace A = 3, B = 14.069\rbrace$, while we assume $a = 0$ (we consider only olive trees, no other trees) and $d(x,y)$ is taken from the file ```olivegrowthprop.mat```.
 
@@ -108,22 +125,26 @@ The Gompertz function parameters have been fitted on the data, yielding the valu
 Spatial spread of the disease follows a _stratified dispersal_ pattern, i.e. a two-process dispersal involving a short-distance dispersal, which represents the local mobility of jumping vectors, and a long-distance dispersal, which accounts for unintentional flight dispersal of vectors by wind or hitchhiking in cars and trucks.
 
 #### Short-distance dispersal
-The short-distance dispersal is modeled by a deterministic 2D kernel. 
-We have tried different kernels, namely an exponential 
+The short-distance dispersal is modeled by a deterministic 2D kernel:
 
 $$
-\hat{k}_e(x,y) = \textrm{e}^{-\frac{(x^2 + y^2)^{\frac{1}{2}}}{\beta}}
+I^S_{t+1}(x,y) = \sum_i\sum_j\hat{k}(x-i,y-j)I^G_{t+1}(i,j) \qquad \Longrightarrow \qquad I^S_{t+1} = \hat{k} * I^G_{t+1}
 $$
 
-and a gaussian
+where the sum is clearly over the dimensions of the grid. 
+
+We have tried different kernels, namely an exponential and a gaussian:
 
 $$
-\hat{k}_g(x,y) = \textrm{e}^{-\frac{x^2 + y^2}{2\beta^2}}
+\begin{aligned}
+& \hat{k}_e(x,y) = \textrm{e}^{-\frac{(x^2 + y^2)^{\frac{1}{2}}}{\beta}} \\
+& \hat{k}_g(x,y) = \textrm{e}^{-\frac{x^2 + y^2}{2\beta^2}}
+\end{aligned}
 $$
 
 where the mean dispersal distance $\beta$ (measured in kms) is assumed to be $\lbrace\beta = 0.1\rbrace$.
-
-**The kernel is not normalized because, after the initial local growth, we want the population in the origin cell to remain the same. We are not modeling a diffusion of individuals, but the spread of a disease, which does not cure.**
+The kernel is not normalized because we want the population in the origin cell $(x,y)$ to remain the same. 
+If we were modeling the movement of infected individuals that spread across the map, then we would have to normalize the kernel.
 
 #### Long-distance dispersal
 
@@ -133,20 +154,18 @@ If $u(x,y) > p$ ($p$ sets a threshold probability), then the cell $(x,y)$ random
 Finally, a cell that is reached by one of the random dispersers is further infected according to the initial proportion of infected according to the Gompertz function:
 
 $$
-\Delta I_t(x,y) = (1 - I_t(x,y))\textrm{e}^{-B}
+\Delta I_t(x,y) = (d(x,y) - I_t(x,y))\textrm{e}^{-B}
 $$
 
-The parameters were set as $\lbrace p = 0.2, M_{max} = 5, D = 20\rbrace$.
+The parameters are set as $\lbrace p = 0.2, M_{max} = 5, D = 20\rbrace$.
 
-**FROM HERE NEW**
-
-Now, we want to find an analytical expression for the long-distance kernel. 
-The evolution is written as: 
+If we wanted to model the average infection level ($\overline{I}_t$) over $N\rightarrow\infty$ runs of the simulation, we can find an analytical expression for the long-distance kernel. 
+The evolution is written as the following (I keep $I_t$ instead of $\overline{I}_t$ just because I'm too lazy to go change all the equations): 
 
 $$
 \begin{aligned}
 I_{t+1}(x,y) & = I_t(x,y) + \Delta I_t(x,y) \\
-& = I_t(x,y) + \overline{M}_{in}(x,y)\cdot(1 - I_t(x,y))e^{-B}
+& = I_t(x,y) + \overline{M}_{in}(x,y)\cdot(d(x,y) - I_t(x,y))e^{-B}
 \end{aligned}
 $$
 
@@ -154,43 +173,72 @@ where $\overline{M}_{in}(x,y)$ is the average number of dispersers jumping into 
 This term can be written in the following way:
 
 $$
-\overline{M}_{in}(x,y) = \sum
+\overline{M}\_{in}(x,y) = \sum\_i\sum\_j p(x-i,y-j) \overline{M}_{out}(i,j)
 $$
 
-The long-distance kernel can be written in the following way:
+where the probability $p(x-i,y-j)$ follows a discretized gaussian distribution, .
+The final term $\overline{M}_{out}(i,j)$ is the average number of dispersers jumping out of cell $(i,j)$ and is equal to the average number of dispersers of $(i,j)$ (if it disperses) multiplied by the probability that $(i,j)$ disperses: 
 
 $$
 \begin{aligned}
-I_{t+1}(x,y) & = \sum_{i=1}^W\sum_{j=1}^H p(x-i,y-j) \cdot (1 - I_t(i,j)) \cdot \textrm{e}^{-B} + I_t(x,y) \\
-& = \sum_{i=1}^W\sum_{j=1}^H p(x-i,y-j) \cdot (1 - I_t(i,j)) \cdot \textrm{e}^{-B} + I_t(x,y)
+\overline{M}\_{out}(x,y) & = \frac{M_{max}}{2}\cdot P(\rho I_t(x,y) > p) \\
+& = \frac{M_{max}}{2}\cdot (1 - P(\rho I_t(x,y) < p)) \\
+& = \frac{M_{max}}{2} \left[1 - \frac{p}{d(x,y)}\left(\ - \text{log}\frac{p}{d(x,y)}\right)\right]
 \end{aligned}
 $$
 
-where $p(x-i,y-j)$ is the probability that a bacteria-carrying vector disperses from $(i,j)$ to $(x,y)$, moving the distance $(x-i, y-j)$. This can be written as
+The expression 
 
 $$
-p(x-i, y-j) = p_N(x-i, y-j) \cdot M
+P(\rho I_t(x,y) < p) = 1 - \frac{p}{d(x,y)}\left(\ - \text{log}\frac{p}{d(x,y)}\right)
+$$ 
+
+is the cumulative distribution of the product of two uniformly distributed random variables, respectively $\rho$ on $\[0,1\]$ and $I_t(x,y)$ on $\[0,d(x,y)\]$ for all times $t$.
+The latter is a quite strong assumption considering that, as the infection progresses, the fraction of cells with a high level of infection ($`I_t(x,y)\lesssim d(x,y)`$) increase (so the distribution of $I\_t(x,y)$ would be skewed towards $`d(x,y)`$).
+However, in areas where the infection has progressed, random dispersers would mainly disperse into cells with a high level of infection, and their contribution would be negligible to the overall spreading of the infection.
+Therefore, we practically imagine that the uniform distribution of $I_t(x,y)$ is applied only to the front of the infection.
+
+To summarize, the final expression for the average infections $\overline{I}^L\_{t+1}=I^L_{t+1}$ is:
+
+$$
+\begin{aligned}
+I^L_{t+1}(x,y) & = I^S_{t+1}(x,y) + \Delta I^S_{t+1}(x,y) \\
+& = I^S_{t+1}(x,y) + \overline{M}\_{in}(x,y)\cdot(d(x,y) - I^S\_{t+1}(x,y))e^{-B} \\
+& = I^S_{t+1}(x,y) + (d(x,y) - I^S\_{t+1}(x,y))e^{-B}\cdot\sum\_i\sum\_j p(x-i,y-j) \overline{M}\_{out}(i,j) \\
+& = I^S_{t+1}(x,y) + (d(x,y) - I^S\_{t+1}(x,y))e^{-B}\cdot\sum\_i\sum\_j p(x-i,y-j) \frac{M_{max}}{2} \left[1 - \frac{p}{d(i,j)}\left(\ - \text{log}\frac{p}{d(i,j)}\right)\right] \\
+& = I^S_{t+1}(x,y) + (d(x,y) - I^S\_{t+1}(x,y))e^{-B}\frac{M_{max}}{2}(p(x,y) * g(d(x,y)))
+\end{aligned}
 $$
 
-where is the probability of jumping that distance according to a gaussian/normal distribution, while $M$ is the number of dispersers. In practice, instead of using $M$, we use $\mathbb{E}[M]$. This term is calculated as:
+where $g(d(x,y)) = \left[1 - \frac{p}{d(x,y)}\left(\ - \text{log}\frac{p}{d(x,y)}\right)\right]$.
 
-$$
-\mathbb{E}[M](x,y) = \frac{M_{max}}{2}\left[1 - \frac{p}{d(x,y)}\left(1 - \textrm{log}\frac{p}{d(x,y)}\right)\right]
-$$
-
-where $d(x,y)$ is the usual density of olive groves in cell (x,y). 
+In absence of control measures, $I_{t+1} = I^L_{t+1}$.
 
 ### 3. Control measures
 
-In the model, the demarcated areas are subdivided in a slightly different way. We have four zones: infected (IZ), eradication (EZ), buffer (BZ) and surveillance (SZ). 
-Control measures are implemented only in the eradication and buffer zones, which together form the control zone (CZ). 
+In the model, the demarcated areas are subdivided in a slightly different way. We have four zones: infected (**IZ**), eradication (**EZ**), buffer (**BZ**) and surveillance (**SZ**). 
+Control measures are implemented only in the eradication and buffer zones, which together form the control zone (**CZ**). 
 In this zone, we assign a probability of infection detection $p_{detect}(x,y)\sim\mathcal{U}[0,1]$ to every cell.
 If the surveillance efficiency $s\in[0,1]$ (given as a parameter) is greater than the detection probability ($s > p_{detect}$), the infected trees in the cell are eradicated and not replaced.
+
+$$
+I^C_{t+1}(x,y) = 
+\begin{cases}
+0 & \text{if} p_{detect}(x,y) < s \\
+I^L_{t+1}(x,y) & \text{otherwise}
+\end{cases}
+$$
+
+On average, we would obtain 
+
+$$
+\overline{I}^C\_{t+1} = (1 - s)\overline{I}^L_{t+1}
+$$
+
 The surveillance efficiency in the two zones within the control zone may vary: for example, it can be higher in the eradication zone and lower in the buffer zone.   
 
 The parameter here is therefore only $\lbrace s\rbrace$.
 
-**In practice, in the code we apply the different steps consecutively, therefore updating the infectious population step-by-step.**
 
 ## Data and analysis
 
