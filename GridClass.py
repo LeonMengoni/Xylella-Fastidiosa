@@ -5,6 +5,8 @@ from matplotlib import colors
 import scipy as sp
 import matplotlib.patches as mpatches
 import utils as ut
+from sklearn import linear_model
+import statsmodels.api as sm
 
 class Grid():
     def __init__(self, density=None, shape=None, sea_perc=0.25):
@@ -220,6 +222,42 @@ class Grid():
             self.all_incidences[i] = self.incidence
         
         self.risk = np.mean(self.all_incidences, axis=0)
+
+    def calculate_speed(self, timesteps, parameters, N=None, use_risk=False, weighted=False):
+        self.timesteps = timesteps
+        self.parameters = parameters
+        self.N = N
+        self.use_risk = use_risk
+        self.weighted = weighted
+        
+        if not self.weighted:   self.avg_distance = np.zeros(self.timesteps+1)
+        if self.weighted:       self.weighted_distance = np.zeros(self.timesteps+1) # distance weighted by incidence in cell
+
+        if not self.use_risk:   self.simulate(self.timesteps, self.parameters)
+        if self.use_risk:       self.evaluate_risk(self.N, self.timesteps, self.parameters)
+
+        for t in range(self.timesteps+1):
+            if not self.use_risk:   infected_mask = self.incidence[t] > 0
+            if self.use_risk:       infected_mask = self.risk[t] > 0
+            infected_coordinates = np.argwhere(infected_mask)
+            distances = np.linalg.norm(infected_coordinates - self.seed, axis=1)
+            if not self.weighted:   
+                self.avg_distance[t] = np.mean(distances)
+            if self.weighted:       
+                weights = self.incidence[t][infected_mask].flatten()
+                self.weighted_distance[t] = (distances * weights).sum() / weights.sum()
+
+        X = np.arange(self.timesteps+1)
+        if not self.weighted:   y = self.avg_distance
+        if self.weighted:       y = self.weighted_distance
+
+        # model = linear_model.LinearRegression(fit_intercept=False)
+        # model.fit(X.reshape(-1,1), y)
+
+        ols = sm.OLS(y, X)
+        model = ols.fit()
+
+        return model
 
     def plot_short_distance_kernel(self, figsize=(6,6)):
         self.k_threshold = 1e-40
