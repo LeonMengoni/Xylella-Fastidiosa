@@ -190,7 +190,7 @@ $$
 The expression 
 
 $$
-P(\rho I_t(x,y) < p) = 1 - \frac{p}{d(x,y)}\left(\ - \text{log}\frac{p}{d(x,y)}\right)
+P(\rho I_t(x,y) < p) = 1 - \frac{p}{d(x,y)}\left(1 - \text{log}\frac{p}{d(x,y)}\right)
 $$ 
 
 is the cumulative distribution of the product of two uniformly distributed random variables, respectively $\rho$ on $\[0,1\]$ and $I_t(x,y)$ on $\[0,d(x,y)\]$ for all times $t$.
@@ -205,7 +205,7 @@ $$
 I^L_{t+1}(x,y) & = I^S_{t+1}(x,y) + \Delta I^S_{t+1}(x,y) \\
 & = I^S_{t+1}(x,y) + \overline{M}\_{in}(x,y)\cdot(d(x,y) - I^S\_{t+1}(x,y))e^{-B} \\
 & = I^S_{t+1}(x,y) + (d(x,y) - I^S\_{t+1}(x,y))e^{-B}\cdot\sum\_i\sum\_j p(x-i,y-j) \overline{M}\_{out}(i,j) \\
-& = I^S_{t+1}(x,y) + (d(x,y) - I^S\_{t+1}(x,y))e^{-B}\cdot\sum\_i\sum\_j p(x-i,y-j) \frac{M_{max}}{2} \left[1 - \frac{p}{d(i,j)}\left(\ - \text{log}\frac{p}{d(i,j)}\right)\right] \\
+& = I^S_{t+1}(x,y) + (d(x,y) - I^S\_{t+1}(x,y))e^{-B}\cdot\sum\_i\sum\_j p(x-i,y-j) \frac{M_{max}}{2} \left[1 - \frac{p}{d(i,j)}\left(1 - \text{log}\frac{p}{d(i,j)}\right)\right] \\
 & = I^S_{t+1}(x,y) + (d(x,y) - I^S\_{t+1}(x,y))e^{-B}\frac{M_{max}}{2}(p(x,y) * g(d(x,y)))
 \end{aligned}
 $$
