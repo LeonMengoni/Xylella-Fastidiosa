@@ -123,6 +123,8 @@ $$
 
 where the mean dispersal distance $\beta$ (measured in kms) is assumed to be $\lbrace\beta = 0.1\rbrace$.
 
+**The kernel is not normalized because, after the initial local growth, we want the population in the origin cell to remain the same. We are not modeling a diffusion of individuals, but the spread of a disease, which does not cure.**
+
 #### Long-distance dispersal
 
 The long-distance dispersal is modelled by isotropic stochastic dispersal. 
@@ -145,6 +147,8 @@ If the surveillance efficiency $s\in[0,1]$ (given as a parameter) is greater tha
 The surveillance efficiency in the two zones within the control zone may vary: for example, it can be higher in the eradication zone and lower in the bufer zone.   
 
 The parameter here is therefore only $\lbrace s\rbrace$.
+
+**In practice, in the code we apply the different steps consecutively, therefore updating the infectious population step-by-step.**
 
 ## Data and analysis
 
