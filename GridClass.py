@@ -65,7 +65,7 @@ class Grid():
         # self.grove_mask = self.density > 0
         # self.no_grove_mask = self.density == 0
 
-    def __set_short_distance_kernel(self):
+    def __set_short_distance_kernel(self): # not normalized so that the value in (x,y)=(0,0) is 1
         y = np.linspace(-(self.rows-1), (self.rows-1), 2*self.rows-1)
         x = np.linspace(-(self.cols-1), (self.cols-1), 2*self.cols-1)
         Y, X = np.meshgrid(y, x)
@@ -74,7 +74,7 @@ class Grid():
             self.kernel = np.exp(-(X**2 + Y**2)**(1/2) / self.beta)
 
         elif self.kernel_type == 'gaussian':
-            self.kernel = np.exp(-(X**2 + Y**2)/(2 * self.beta**2)) / np.sqrt(2 * np.pi * self.beta**2)
+            self.kernel = np.exp(-(X**2 + Y**2)/(2 * self.beta**2))
         
     def __set_levy_flight_kernel(self):
         y = np.linspace(-(self.rows-1), (self.rows-1), 2*self.rows-1)
@@ -118,7 +118,7 @@ class Grid():
                     elif self.sea_mask[tuple(new_cell)]:                                        continue # Sea
                     elif self.no_grove_mask[tuple(new_cell)]:                                   break    # No grove, OK
                     else:
-                        I[tuple(new_cell)] += (1 - I[tuple(new_cell)]) * np.exp(-self.B) # Added the 1-I part to say that the remaining susceptible are infected with probability exp(-B) 
+                        I[tuple(new_cell)] += (self.density[tuple(new_cell)] - I[tuple(new_cell)]) * np.exp(-self.B) # Added the 1-I part to say that the remaining susceptible are infected with probability exp(-B) 
                         break    # OK
         I = self.__adjust_population(I)
         return I
