@@ -12,8 +12,17 @@ Also, the sampling of monitored trees is very heterogeneous, both in time and in
 In particular, after 2015, most samples have been taken only in the buffer and containment zones, while almost none in the infected zone. 
 
 <div align="center">
-    <img src=Images/Yearly_samples_2013-2023 width=1260 height=1064>
+    <img src=Images/Yearly_samples_2013-2023.png width=1000 height=844>
 </div>
+
+The analysis of positive results yielded the following results
+
+
+
+<div align="center">
+    <img src=Images/Speed_from_data.png width=700 height=417>
+</div>
+
 
 
 In a paper by Kottelebnerg, Saponari (2021), the speed was estimated as 10.0 km per year (95% confidence interval: 7.5–12.5 km per year). 
