@@ -1,21 +1,35 @@
 ## Data and analysis
 
-We propose to calculate (roughly) the speed of disease spread from the monitoring data. 
+Firstly, we attempt to calculate the spreading speed of the disease from the monitoring data. 
+On the model, we perform a sensitivity analysis to identify the key parameters that cause this speed to change most significantly.
+Then, we search for the model parameters that most closely resemble our speed estimates.
+**Finally, we introduce control measures to explore variations in disease spreading speed.**
 
-### 1. Estimation of bacteria spread speed
-We use a simple linear regression over maximum distances from the epicentre (assumed to be Gallipoli, 40.055851°N, 17.992615°E) over time. 
-We get an estimate for the speed over all years (2013-2023) or only over the first 4 years of samples (2013-2016).
-This method is, in truth, very rough and subject to bias.
-The initial spread of the bacterium is unknow and it is at best estimated to have entered Italy in the timeframe 2008-2010.
-The first positive samples were only taken in 2013, though; therefore, the evolution of the bacterium spread in its first years in the region is unknown. 
-Also, the sampling of monitored trees is very heterogeneous, both in time and in space.
-In particular, after 2015, most samples have been taken only in the buffer and containment zones, while almost none in the infected zone. 
+### 1. Estimation of disease spreading speed from monitoring data
+
+We attempt two methods to estimate the disease spreading speed: a linear regression over maximum distances from the epicentre and a logistic fit to the epidemic front. Both methods are limited in the attendability of their results.
+
+The initial moment of introduction of the bacterium is unknown, as well as its epicentre.
+The first positive samples were taken in the _comune_ of Trepuzzi, in the hinterland of the province of Lecce, but pretty soon samples were also taken in and around Gallipoli.
+Subsequent studies (Kottelenberg, 2021) have shown that Gallipoli is the most likely point of introduction of the bacterium, in the timeframe 2008-2010.
+In addition, monitoring data is extremely heterogeneous, both in time and in space.
+As can be seen in the figure below, sampling areas change drastically over the years: while sampling occurred more uniformly over the whole region in the first couple of years, after 2015 most samples have been taken only in the buffer and containment zones, and close to none in the infected zone.
+Also, the number of samples taken every year has fluctuated a lot.
 
 <div align="center">
     <img src=Images/Yearly_samples_2013-2023.png width=1000 height=844>
 </div>
 
-The analysis of positive results yielded the following results: 
+In the following, the epicentre of the disease is assumed to be Gallipoli (40.055851°N, 17.992615°E).
+
+#### i. Linear regression
+
+In this first method, we use a simple linear regression over the evolution of the maximum distance from the epicentre over time. 
+We get an estimate for the speed over all years (2013-2023) or only over the first 4 years of samples (2013-2016).
+This method is, in truth, very rough and subject to bias.
+
+
+The analysis of positive samples yielded the following results: 
 
 $$
 \begin{aligned}
@@ -24,19 +38,20 @@ v_{\text{init}} & = 16.3\pm0.5 \text{km}/\text{year}
 \end{aligned}
 $$
 
-
-
 <div align="center">
     <img src=Images/DiseaseSpreadSpeed.png width=700 height=417>
 </div>
 
+#### ii. Kottelenberg method
 
+In a paper by Kottelebnerg, Saponari (2021), the speed was estimated as 10.0 km per year (95% confidence interval: 7.5–12.5 km per year).
 
-In a paper by Kottelebnerg, Saponari (2021), the speed was estimated as 10.0 km per year (95% confidence interval: 7.5–12.5 km per year). 
+Apply a logistic function to the shape of the epidemic front, assuming that the disease spread speed remains constant over time 
 
-
-An alternative method could be to use Kottelennerg's method with a logistic function. 
 ### 2. Obtain parameters from least squares method by comparing data speed to simulation speed
+
+#### Sensitivity analysis
+
 ### 3. Introduction of latency period 
 In White (2020), the incubation period (infected but asymptomatic, and negligible to no infectivity) is estimated with Bayesian methods at 1.2 years (1-1.3 95% credibility interval).
 
