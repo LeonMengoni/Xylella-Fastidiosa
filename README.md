@@ -1,9 +1,38 @@
-
-
 ## Data and analysis
 
+We propose to calculate (roughly) the speed of disease spread from the monitoring data. 
 
-### 0. Long-distance dispersal equation
+### 1. Estimation of bacteria spread speed
+We use a simple linear regression over maximum distances from the epicentre (assumed to be Gallipoli, 40.055851°N, 17.992615°E) over time. 
+We get an estimate for the speed over all years (2013-2023) or only over the first 4 years of samples (2013-2016).
+This method is, in truth, very rough and subject to bias.
+The initial spread of the bacterium is unknow and it is at best estimated to have entered Italy in the timeframe 2008-2010.
+The first positive samples were only taken in 2013, though; therefore, the evolution of the bacterium spread in its first years in the region is unknown. 
+Also, the sampling of monitored trees is very heterogeneous, both in time and in space.
+In particular, after 2015, most samples have been taken only in the buffer and containment zones, while almost none in the infected zone. 
+
+<div align="center">
+    <img src=Images/Yearly_samples_2013-2023 width=1260 height=1064>
+</div>
+
+
+In a paper by Kottelebnerg, Saponari (2021), the speed was estimated as 10.0 km per year (95% confidence interval: 7.5–12.5 km per year). 
+
+
+An alternative method could be to use Kottelennerg's method with a logistic function. 
+### 2. Obtain parameters from least squares method by comparing data speed to simulation speed
+### 3. Introduction of latency period 
+In White (2020), the incubation period (infected but asymptomatic, and negligible to no infectivity) is estimated with Bayesian methods at 1.2 years (1-1.3 95% credibility interval).
+
+**Definition of risk**
+
+## Summary of other main results and findings 
+
+White et al, 2017
+Kottelenberg et al, 2021
+
+## Extra
+### Long-distance dispersal equation
 If we wanted to model the average infection level ($\overline{I}_t$) over $N\rightarrow\infty$ runs of the simulation, we can find an analytical expression for the long-distance kernel. 
 The evolution is written as the following: 
 
@@ -57,25 +86,6 @@ $$
 
 where $g(d(x,y)) = \left[1 - \frac{p}{d(x,y)}\left(\ - \text{log}\frac{p}{d(x,y)}\right)\right]$.
 
-
-
-### 1. Estimation of bacteria spread speed
-In a paper by Kottelebnerg, Saponari (2021), the speed was estimated as 10.0 km per year (95% confidence interval: 7.5–12.5 km per year). 
-
-We use as method a simple linear regression over maximum distances from the epicentre over time. 
-We get an estimate for the speed over all years (2013-2023) or only over the first 4 years of samples (2013-2016).
-
-An alternative method could be to use Kottelennerg's method with a logistic function. 
-### 2. Obtain parameters from least squares method by comparing data speed to simulation speed
-### 3. Introduction of latency period 
-In White (2020), the incubation period (infected but asymptomatic, and negligible to no infectivity) is estimated with Bayesian methods at 1.2 years (1-1.3 95% credibility interval).
-
-**Definition of risk**
-
-## Summary of other main results and findings 
-
-White et al, 2017
-Kottelenberg et al, 2021
 
 ## References
 <a id="1">[1]</a>
