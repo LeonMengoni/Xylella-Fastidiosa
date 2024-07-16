@@ -16,11 +16,11 @@ In addition, monitoring data is extremely heterogeneous, both in time and in spa
 As can be seen in the figure below, sampling areas change drastically over the years: while sampling occurred more uniformly over the whole region in the first couple of years, after 2015 most samples have been taken only in the buffer and containment zones, and close to none in the infected zone.
 Also, the number of samples taken every year has fluctuated a lot.
 
+In the following, the epicentre of the disease is assumed to be Gallipoli (40.055851°N, 17.992615°E).
+
 <div align="center">
     <img src=Images/Yearly_samples_2013-2023.png width=1000 height=844>
 </div>
-
-In the following, the epicentre of the disease is assumed to be Gallipoli (40.055851°N, 17.992615°E).
 
 #### i. Linear regression
 
@@ -39,7 +39,7 @@ v_{\text{init}} & = 16.3\pm0.5 \text{km}/\text{year}
 $$
 
 <div align="center">
-    <img src=Images/DiseaseSpreadSpeed.png width=700 height=417>
+    <img src=Images/Disease_Spreading_Speed.png width=700 height=417>
 </div>
 
 #### ii. Kottelenberg method
