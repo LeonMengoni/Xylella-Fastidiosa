@@ -15,12 +15,19 @@ In particular, after 2015, most samples have been taken only in the buffer and c
     <img src=Images/Yearly_samples_2013-2023.png width=1000 height=844>
 </div>
 
-The analysis of positive results yielded the following results
+The analysis of positive results yielded the following results: 
+
+$$
+\begin{aligned}
+v & = 9.5\pm0.4 \text{km}/\text{year} \\
+v_{\text{init}} & = 16.3\pm0.5 \text{km}/\text{year}
+\end{aligned}
+$$
 
 
 
 <div align="center">
-    <img src=Images/Speed_from_data.png width=700 height=417>
+    <img src=Images/DiseaseSpreadSpeed.png width=700 height=417>
 </div>
 
 
