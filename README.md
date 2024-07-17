@@ -316,7 +316,7 @@ $$
 #### Sensitivity analysis
 
 We study how the disease spreading speed $c_{\text{risk}}$ varies as we tweak the model input parameters.
-The parameters that we will explore are: $\brace A, B, \beta, p, M_{max}, D\rbrace$.
+The parameters that we will explore are: $\lbrace A, B, \beta, p, M_{max}, D\rbrace$.
 For evaluating the risk, we fix $N = 30$. 
 
 ##### _i_) $A$: rate of local growth
