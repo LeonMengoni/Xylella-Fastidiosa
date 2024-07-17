@@ -154,6 +154,15 @@ To further prove the previous statement, we plot the speed as a function of both
 
 ##### _iii_) $\beta$: mean dispersal distance
 
+As we could imagine, by increasing the mean dispersal distance of the short-distance kernel, the speed of the epidemic increases, approximately linearly. 
+
+**We could try seeing the balancing between short-distance and long-distance dispersal distances, $\beta$ and $D$.**
+
+<div align="center">
+    <img src=Images/Speed_beta.png width=600 height=600>
+</div>
+
+
 ##### _iv_) $p$: probability threshold
 
 ##### _v_) $M_{max}$: maximum number of long-distance dispersers per cell
