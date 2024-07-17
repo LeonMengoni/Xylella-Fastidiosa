@@ -352,6 +352,7 @@ To further prove the previous statement, we plot the speed as a function of both
 ##### _iii_) $\beta$: mean dispersal distance
 
 As we could imagine, by increasing the mean dispersal distance of the short-distance kernel, the speed of the epidemic increases, approximately linearly. 
+Looking at the y-axis, we also see that this parameter is the greatest driver of the disease spreading speed. 
 
 **We could try seeing the balancing between short-distance and long-distance dispersal distances, $\beta$ and $D$.**
 
