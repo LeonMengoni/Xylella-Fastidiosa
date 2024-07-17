@@ -119,15 +119,18 @@ $$
 #### Sensitivity analysis
 
 We study how the disease spreading speed $c_{\text{risk}}$ varies as we tweak the model input parameters.
+The parameters that we will explore are: $\brace A, B, \beta, p, M_{max}, D\rbrace$
 
-
+##### A: rate of local growth
 
 
 ### 3. Model parameter search 
 
-**Definition of risk**
+### 4. Varying control measures
 
-### 4. Further proposals: introduction of latency period 
+Determine whether implemented measures have yielded results.
+
+### 5. Further proposals: introduction of latency period 
 In White (2020), the incubation period (infected but asymptomatic, and negligible to no infectivity) is estimated with Bayesian methods at 1.2 years (1-1.3 95% credibility interval).
 One idea for further analysis would be to incorporate this information in the simulation model.
 At present (17/07/2024), this was not implemented due to lack of time.
