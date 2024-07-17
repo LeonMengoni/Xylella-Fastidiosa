@@ -170,7 +170,7 @@ If the surveillance efficiency $s\in[0,1]$ (given as a parameter) is greater tha
 $$
 I^C_{t+1}(x,y) = 
 \begin{cases}
-0 & \text{if} p_{detect}(x,y) < s \\
+0 & \text{if } p_{detect}(x,y) < s \\
 I^L_{t+1}(x,y) & \text{otherwise}
 \end{cases}
 $$
