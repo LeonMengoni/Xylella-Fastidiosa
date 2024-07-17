@@ -91,7 +91,37 @@ For the following years, estimates for $c$ are in a reasonable range.
 
 In the paper, a more sophisticated analysis led to an estimate of $c_{Kott.} = 10.0\text{km}/\text{year}$ (with 95% confidence interval $7.5-12.5\text{km}/\text{year}$).  
 
-### 2. Sensitivity analysis
+### 2. Sensitivity analysis on simulation model 
+
+To perform a sensitivity analysis for the model, we study how modifying the input parameters affect the model outputs (i.e. the disease spreading speed $c$).
+We therefore have to also calculate the speed $c_{\text{\sim}}$ from our simulation.
+
+#### Estimation of disease spreading speed from simulation
+
+We propose to calculate the speed differently from the case of actual data, due to the fact that in the simulation we have all the "data".
+Instead of using the maximum distance from the epicentre, we use the average distance of all infected cells, and perform a linear regression with respect to time.
+
+$$
+c_{\text{\sim}} = \frac{1}{|\text{infected cells}|} \sum_{(x,y)\in\lbrace\text{infected cells}\rbrace} \frac{d_O(x,y; t)}{t}
+$$
+
+where $d_O(x,y;t)$ is the distance of cell $(x,y)$ from the epicentre $O$, at time $t$.
+
+To eliminate (however possible) the stochasticity of the model, we define the **risk** $R(x,y;t)$ (for every cell $(x,y)$ and every timestep $t$) as the average incidence over $N$ runs of the simulation, where $N$ is typically in the order of ~ 10.
+(White et al. [[1]](#1) define it over $N=10000$ runs, but we will keep this number low because of constraints on time and computational resources.)
+When calculating the risk, compared to a single run of the simulation, there will be cells that are further out with a positive average incidence, therefore skewing the estimate of the speed $c_{\text{\sim}}$ towards higher values.
+To mitigate this effect, we weight the distance of a cell from the epicentre by its average incidence (risk), as follows:
+
+$$
+c_{\text{risk}} = \frac{1}{|\text{infected cells}|} \sum_{(x,y)\in\lbrace\text{infected cells}\rbrace} \frac{R(x,y;t)\cdot d_O(x,y;t)}{t}
+$$
+
+#### Sensitivity analysis
+
+We study how the disease spreading speed $c_{\text{risk}}$ varies as we tweak the model input parameters.
+
+
+
 
 ### 3. Model parameter search 
 
