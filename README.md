@@ -159,7 +159,7 @@ As we could imagine, by increasing the mean dispersal distance of the short-dist
 **We could try seeing the balancing between short-distance and long-distance dispersal distances, $\beta$ and $D$.**
 
 <div align="center">
-    <img src=Images/Speed_beta.png width=600 height=600>
+    <img src=Images/Speed_beta.png width=600 height=454>
 </div>
 
 ##### _iv_) $M_{max}$: maximum number of long-distance dispersers per cell
@@ -167,7 +167,7 @@ As we could imagine, by increasing the mean dispersal distance of the short-dist
 Increasing the maximum number of dispersers $M_{max}$, the average speed increases, as can be expected. 
 
 <div align="center">
-    <img src=Images/Speed_M_max_30.png width=600 height=600>
+    <img src=Images/Speed_M_max_30.png width=600 height=450>
 </div>
 
 
@@ -176,12 +176,30 @@ Increasing the maximum number of dispersers $M_{max}$, the average speed increas
 Analogously, for $D$, the variance of the gaussian long-distance jumps of dispersers.
 
 <div align="center">
-    <img src=Images/Speed_D.png width=600 height=600>
+    <img src=Images/Speed_D.png width=600 height=450>
 </div>
 
-##### _v(bis)_) $M_{max}$ and $D$ (simultaneously)
+##### _v(bis)_) $M\_{max}$ and $D$ (simultaneously)
 
-### 3. Model parameter search 
+Again, here we notice how the greater change is given by the variation of $D$, although, admittedly, we would have to explore the space of the parameters $M_{max}$ and $D$ a bit more to give a more definite answer. 
+
+<div align="center">
+    <img src=Images/Speed_M_maxD.png width=600 height=600>
+</div>
+
+### 3. Model parameter search
+
+Now, we want to find a set of parameters that may give us back the values for the speed that we estimated for the data, by a least squares minimization.
+We assumed a constant speed for the epidemic front, unchanged in every year; thus, we can use as estimate the average speed calculated from the years 2014-2018: $\overline{c} = 6.5\text{km}/\text{year}$.
+
+Having called our model $\mathcal{M}(A, B, \beta, M_{max}, D)$ our objective is to find the set of parameters that minimizes:
+
+$$
+LS = \sum_{\lbrace A, B, \beta, M_{max}, D\rbrace}[c(\mathcal{M}(A, B, \beta, M_{max}, D)) - \overline{c}]^2
+$$
+
+To minimize the search time, we can eliminate $B$ from the analysis since we determined that it doesn't affect the final speed estimates very much. 
+
 
 ### 4. Varying control measures
 
