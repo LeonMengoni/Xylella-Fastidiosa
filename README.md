@@ -122,7 +122,7 @@ We study how the disease spreading speed $c_{\text{risk}}$ varies as we tweak th
 The parameters that we will explore are: $\brace A, B, \beta, p, M_{max}, D\rbrace$.
 For evaluating the risk, we fix $N = 30$. 
 
-##### _i_) A: rate of local growth
+##### _i_) $A$: rate of local growth
 
 From the below figure we can see that increasing the rate of local growth $A$ has an effect on increasing the speed, up to a point, after which the speed doesn't vary much anymore. 
 If we recall the graph showing the local growth as a function of $A$, we can easily understand why: for values of $A$ exceeding 4 or 5, one timestep of the simulation (i.e. one year) is enough to send the incidence close to 100%, and for larger $A$ there is not much change. 
@@ -131,7 +131,7 @@ If we recall the graph showing the local growth as a function of $A$, we can eas
     <img src=Images/Speed_A.png width=600 height=484>
 </div>
 
-##### _ii_) B: (related to) initial proportion of infected
+##### _ii_) $B$: (related to) initial proportion of infected
 
 Let's recall that the parameter $B$ is related to the seeding of a new cell through the proportion $e^{-B}$.
 Therefore, for greater $B$ we would obtain a smaller seeding.
@@ -144,7 +144,7 @@ This is obvious since we just concluded in the previous section that it is $A$ t
     <img src=Images/Speed_B.png width=600 height=450>
 </div>
 
-##### _ii(bis)_) A and B (simultaneously)
+##### _ii(bis)_) $A$ and $B$ (simultaneously)
 
 To further prove the previous statement, we plot the speed as a function of both parameters $A$ and $B$ and we see that the greater changes occur along the $A$-axis, and not the $B$-axis.
 
@@ -162,14 +162,18 @@ As we could imagine, by increasing the mean dispersal distance of the short-dist
     <img src=Images/Speed_beta.png width=600 height=600>
 </div>
 
+##### _iv_) $M_{max}$: maximum number of long-distance dispersers per cell
 
-##### _iv_) $p$: probability threshold
+Increasing the maximum number of dispersers $M_{max}$, the average speed increases, as can be expected. 
 
-##### _v_) $M_{max}$: maximum number of long-distance dispersers per cell
+<div align="center">
+    <img src=Images/Speed_M_max_30.png width=600 height=600>
+</div>
 
-##### _vi_) $D$: variance of long-distance dispersal
 
+##### _v_) $D$: variance of long-distance dispersal
 
+##### _v(bis)_) $M_{max}$ and $D$ (simultaneously)
 
 ### 3. Model parameter search 
 
