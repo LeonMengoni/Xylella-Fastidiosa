@@ -195,7 +195,7 @@ We assumed a constant speed for the epidemic front, unchanged in every year; thu
 Having called our model $\mathcal{M}(A, B, \beta, M_{max}, D)$ our objective is to find the set of parameters that minimizes:
 
 $$
-LS = \sum_{\lbrace A, B, \beta, M_{max}, D\rbrace}[c(\mathcal{M}(A, B, \beta, M_{max}, D)) - \overline{c}]^2
+f(A, B, \beta, M_{max}, D | \overline{c}) = [c(\mathcal{M}(A, B, \beta, M_{max}, D)) - \overline{c}]^2
 $$
 
 To minimize the search time, we can eliminate $B$ from the analysis since we determined that it doesn't affect the final speed estimates very much. 
