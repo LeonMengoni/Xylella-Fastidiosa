@@ -19,7 +19,7 @@ Also, the number of samples taken every year has fluctuated a lot.
 In the following, the epicentre of the disease is assumed to be Gallipoli (40.055851°N, 17.992615°E).
 
 <div align="center">
-    <img src=Images/All_samples_by_year.png width=1000 height=844>
+    <img src=Images/All_samples_by_year.png width=1000 height=750>
 </div>
 
 #### _i_) Linear regression
