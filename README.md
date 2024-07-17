@@ -26,10 +26,9 @@ In the following, the epicentre of the disease is assumed to be Gallipoli (40.05
 
 In this first method, we use a simple linear regression over the evolution of the maximum distance from the epicentre over time. 
 We get an estimate for the speed over all years (2013-2023) or only over the first 4 years of samples (2013-2016).
-This method is, in truth, very rough and subject to bias.
+This method is, in truth, very rough and subject to bias, for the reasons stated above, regarding the missing data. 
 
-
-The analysis of positive samples yielded the following results: 
+The analysis of positive samples yielded the following spreading speeds: 
 
 $$
 \begin{aligned}
@@ -38,15 +37,56 @@ v_{\text{init}} & = 16.3\pm0.5 \text{km}/\text{year}
 \end{aligned}
 $$
 
+where by $v_{\text{init}}$ we mean the velocity estimated from the first 4 years (2013-2016) of data. 
+
 <div align="center">
     <img src=Images/Disease_Spreading_Speed.png width=700 height=417>
 </div>
 
 #### ii. Kottelenberg method
 
-In a paper by Kottelebnerg, Saponari (2021), the speed was estimated as 10.0 km per year (95% confidence interval: 7.5–12.5 km per year).
+For the second method, we take inspiration from Kottelenberg et al. (2021).
+Here, the authors attempt to estimate the shape of the invasion front and its rate of movement. 
 
-Apply a logistic function to the shape of the epidemic front, assuming that the disease spread speed remains constant over time 
+The monitoring data was grouped in 1-km wide distance classes from the epicentre of Gallipoli and we calculated the proportion of positive tests in each class. 
+We chose for the shape of the disease front a deterministic function, namely a logistic function of the type:
+
+$$
+p = p(x,t) = \frac{1}{1 + e^{x-(x_{50}) + ct}}
+$$
+
+where the function depends also on time $t$ (years elapsed from start of epidemic, i.e. 2013), and where $c$ is the spreading speed of the disease (assumed to be constant through the years) and $x_{50}$ is the (negative) x-value (distance from Gallipoli) of the half-maximum of the curve at $t = 0$. 
+
+In each distance class $d$, the number $n_d$ of samples tested is known, while the number of positives $pos_d$ is a binary stochastic variable.
+Therefore, we choose the binomial distribution for fitting the model to the data.
+Finally, we evaluate the model parameters by maximizing the likelihood (minimizing the negative log-likelihood).
+
+To summarize, we proceed as follows. 
+We only analyze the first 6 years, 2013-2018, because data becomes very clustered in the buffer zone for later years.
+For every one of these years, we minimize the negative log-likelihood to obtain the fit parameters: 
+
+$$
+\begin{aligned}
+NLL & = -\sum_{d\in\lbrace 1,2,\cdots,d_{max}\rbrace} \log[\mathcal{B}(pos_d, n_d)] = -\sum_d \log\left[{n_d\choose pos_d} p^{pos_d} (1-p)^{n_d-pos_d} \right]
+\end{aligned}
+$$
+
+The parameter we are most interested in is $c$:
+
+$$
+\begin{aligned}
+c_{2013} & = 0.2\text{km}/\text{year} \\
+c_{2014} & = 8.7\text{km}/\text{year} \\
+c_{2015} & = 6.1\text{km}/\text{year} \\
+c_{2016} & = 5.9\text{km}/\text{year} \\
+c_{2017} & = 6.4\text{km}/\text{year} \\
+c_{2018} & = 5.2\text{km}/\text{year} 
+\end{aligned}
+$$
+
+<div align="center">
+    <img src=Images/Speed_from_data_fit width=1000 height=844>
+</div>
 
 ### 2. Obtain parameters from least squares method by comparing data speed to simulation speed
 
