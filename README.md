@@ -173,6 +173,12 @@ Increasing the maximum number of dispersers $M_{max}$, the average speed increas
 
 ##### _v_) $D$: variance of long-distance dispersal
 
+Analogously, for $D$, the variance of the gaussian long-distance jumps of dispersers.
+
+<div align="center">
+    <img src=Images/Speed_D.png width=600 height=600>
+</div>
+
 ##### _v(bis)_) $M_{max}$ and $D$ (simultaneously)
 
 ### 3. Model parameter search 
