@@ -223,7 +223,7 @@ class Grid():
         
         self.risk = np.mean(self.all_incidences, axis=0)
 
-    def calculate_speed(self, timesteps, parameters, N=None, use_risk=False, weighted=False):
+    def calculate_speed(self, timesteps, parameters, N=None, use_risk=False, weighted=False, verbose=True):
         self.timesteps = timesteps
         self.parameters = parameters
         self.N = N
@@ -234,7 +234,7 @@ class Grid():
         if self.weighted:       self.weighted_distance = np.zeros(self.timesteps+1) # distance weighted by incidence in cell
 
         if not self.use_risk:   self.simulate(self.timesteps, self.parameters)
-        if self.use_risk:       self.evaluate_risk(self.N, self.timesteps, self.parameters)
+        if self.use_risk:       self.evaluate_risk(self.N, self.timesteps, self.parameters, verbose=verbose)
 
         for t in range(self.timesteps+1):
             if not self.use_risk:   infected_mask = self.incidence[t] > 0
