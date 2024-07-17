@@ -94,7 +94,7 @@ In the paper, a more sophisticated analysis led to an estimate of $c_{Kott.} = 1
 ### 2. Sensitivity analysis on simulation model 
 
 To perform a sensitivity analysis for the model, we study how modifying the input parameters affect the model outputs (i.e. the disease spreading speed $c$).
-We therefore have to also calculate the speed $c_{\text{\sim}}$ from our simulation.
+We therefore have to also calculate the speed $c_{\text{sim}}$ from our simulation.
 
 #### Estimation of disease spreading speed from simulation
 
@@ -102,14 +102,14 @@ We propose to calculate the speed differently from the case of actual data, due 
 Instead of using the maximum distance from the epicentre, we use the average distance of all infected cells, and perform a linear regression with respect to time.
 
 $$
-c_{\text{\sim}} = \frac{1}{|\text{infected cells}|} \sum_{(x,y)\in\lbrace\text{infected cells}\rbrace} \frac{d_O(x,y; t)}{t}
+c_{\text{sim}} = \frac{1}{|\text{infected cells}|} \sum_{(x,y)\in\lbrace\text{infected cells}\rbrace} \frac{d_O(x,y; t)}{t}
 $$
 
 where $d_O(x,y;t)$ is the distance of cell $(x,y)$ from the epicentre $O$, at time $t$.
 
 To eliminate (however possible) the stochasticity of the model, we define the **risk** $R(x,y;t)$ (for every cell $(x,y)$ and every timestep $t$) as the average incidence over $N$ runs of the simulation, where $N$ is typically in the order of ~ 10.
 (White et al. [[1]](#1) define it over $N=10000$ runs, but we will keep this number low because of constraints on time and computational resources.)
-When calculating the risk, compared to a single run of the simulation, there will be cells that are further out with a positive average incidence, therefore skewing the estimate of the speed $c_{\text{\sim}}$ towards higher values.
+When calculating the risk, compared to a single run of the simulation, there will be cells that are further out with a positive average incidence, therefore skewing the estimate of the speed $c_{\text{sim}}$ towards higher values.
 To mitigate this effect, we weight the distance of a cell from the epicentre by its average incidence (risk), as follows:
 
 $$
@@ -119,9 +119,37 @@ $$
 #### Sensitivity analysis
 
 We study how the disease spreading speed $c_{\text{risk}}$ varies as we tweak the model input parameters.
-The parameters that we will explore are: $\brace A, B, \beta, p, M_{max}, D\rbrace$
+The parameters that we will explore are: $\brace A, B, \beta, p, M_{max}, D\rbrace$.
+For evaluating the risk, we fix $N = 30$. 
 
-##### A: rate of local growth
+##### i. A: rate of local growth
+
+From the below figure we can see that increasing the rate of local growth $A$ has an effect on increasing the speed, up to a point, after which the speed doesn't vary much anymore. 
+If we recall the graph showing the local growth as a function of $A$, we can easily understand why: for values of $A$ exceeding 4 or 5, one timestep of the simulation (i.e. one year) is enough to send the incidence close to 100%, and for larger $A$ there is not much change. 
+
+<div align="center">
+    <img src=Images/Speed_vs_A.png width=600 height=484>
+</div>
+
+##### ii. B: (related to) initial proportion of infected
+
+Let's recall that the parameter $B$ is related to the seeding of a new cell through the proportion $e^{-B}$.
+Therefore, for greater $B$ we would obtain a smaller seeding.
+Since we use a tolerance threshold to eliminate numerical noise, set at a low value of $1e^{-8}$, for very large values of $B$, new cells wouldn't get infected at successive iterations of the simulation.
+This explains the effect of the dipping curve for large $B$. 
+On the other hand, we see that for smaller values of $B$, the speed doesn't change all that much.
+This is obvious since we just concluded in the previous section that it is $A$ that mainly drives the local growth.
+
+<div align="center">
+    <img src=Images/Speed_vs_B.png width=600 height=450>
+</div>
+
+##### iii. A and B (simultaneously)
+
+<div align="center">
+    <img src=Images/Speed_vsAB.png width=600 height=600>
+</div>
+
 
 
 ### 3. Model parameter search 
