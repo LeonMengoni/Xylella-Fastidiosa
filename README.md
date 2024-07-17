@@ -144,7 +144,7 @@ This is obvious since we just concluded in the previous section that it is $A$ t
     <img src=Images/Speed_B.png width=600 height=450>
 </div>
 
-##### _iii_) A and B (simultaneously)
+##### _ii(bis)_) A and B (simultaneously)
 
 To further prove the previous statement, we plot the speed as a function of both parameters $A$ and $B$ and we see that the greater changes occur along the $A$-axis, and not the $B$-axis.
 
@@ -152,7 +152,13 @@ To further prove the previous statement, we plot the speed as a function of both
     <img src=Images/Speed_AB.png width=600 height=600>
 </div>
 
-##### _iv_) $\beta$: mean dispersal distance
+##### _iii_) $\beta$: mean dispersal distance
+
+##### _iv_) $p$: probability threshold
+
+##### _v_) $M_{max}$: maximum number of long-distance dispersers per cell
+
+##### _vi_) $D$: variance of long-distance dispersal
 
 
 
