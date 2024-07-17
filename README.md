@@ -85,7 +85,7 @@ c_{2018} & = 5.2\text{km}/\text{year}
 $$
 
 <div align="center">
-    <img src=Images/Speed_from_data_fit width=1000 height=844>
+    <img src=Images/Speed_from_data_fit.png width=1000 height=667>
 </div>
 
 ### 2. Obtain parameters from least squares method by comparing data speed to simulation speed
