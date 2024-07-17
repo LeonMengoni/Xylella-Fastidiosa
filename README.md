@@ -25,19 +25,17 @@ In the following, the epicentre of the disease is assumed to be Gallipoli (40.05
 #### i. Linear regression
 
 In this first method, we use a simple linear regression over the evolution of the maximum distance from the epicentre over time. 
-We get an estimate for the speed over all years (2013-2023) or only over the first 4 years of samples (2013-2016).
+We get an estimate for the speed $c$ over all years (2013-2023) or only over the first 4 years of samples (2013-2016), $c_{\text{init}}$.
 This method is, in truth, very rough and subject to bias, for the reasons stated above, regarding the missing data. 
 
 The analysis of positive samples yielded the following spreading speeds: 
 
 $$
 \begin{aligned}
-v & = 9.5\pm0.4 \text{km}/\text{year} \\
-v_{\text{init}} & = 16.3\pm0.5 \text{km}/\text{year}
+c & = 9.5\pm0.4 \text{km}/\text{year} \\
+c_{\text{init}} & = 16.3\pm0.5 \text{km}/\text{year}
 \end{aligned}
 $$
-
-where by $v_{\text{init}}$ we mean the velocity estimated from the first 4 years (2013-2016) of data. 
 
 <div align="center">
     <img src=Images/Disease_Spreading_Speed.png width=700 height=417>
@@ -45,7 +43,7 @@ where by $v_{\text{init}}$ we mean the velocity estimated from the first 4 years
 
 #### ii. Kottelenberg method
 
-For the second method, we take inspiration from Kottelenberg et al. (2021).
+For the second method, we take inspiration from Kottelenberg et al. (2021, [[6]](#6)).
 Here, the authors attempt to estimate the shape of the invasion front and its rate of movement. 
 
 The monitoring data was grouped in 1-km wide distance classes from the epicentre of Gallipoli and we calculated the proportion of positive tests in each class. 
@@ -55,7 +53,7 @@ $$
 p = p(x,t) = \frac{1}{1 + e^{x-(x_{50}) + ct}}
 $$
 
-where the function depends also on time $t$ (years elapsed from start of epidemic, i.e. 2013), and where $c$ is the spreading speed of the disease (assumed to be constant through the years) and $x_{50}$ is the (negative) x-value (distance from Gallipoli) of the half-maximum of the curve at $t = 0$. 
+where the function depends also on time $t$ (years elapsed from start of epidemic, i.e. 2013), and where $c$ is the spreading speed of the disease (and is assumed to be constant through the years) and $x_{50}$ is the (negative) x-value (distance from Gallipoli) of the half-maximum of the curve at $t = 0$. 
 
 In each distance class $d$, the number $n_d$ of samples tested is known, while the number of positives $pos_d$ is a binary stochastic variable.
 Therefore, we choose the binomial distribution for fitting the model to the data.
@@ -71,6 +69,10 @@ NLL & = -\sum_{d\in\lbrace 1,2,\cdots,d_{max}\rbrace} \log[\mathcal{B}(pos_d, n_
 \end{aligned}
 $$
 
+<div align="center">
+    <img src=Images/Speed_from_data_fit.png width=1000 height=667>
+</div>
+
 The parameter we are most interested in is $c$:
 
 $$
@@ -84,79 +86,26 @@ c_{2018} & = 5.2\text{km}/\text{year}
 \end{aligned}
 $$
 
-<div align="center">
-    <img src=Images/Speed_from_data_fit.png width=1000 height=667>
-</div>
+As we can see, the estimate for $c$ in 2013 is extremely off, due to the poor data.
+For the following years, estimates for $c$ are in a reasonable range.
 
-### 2. Obtain parameters from least squares method by comparing data speed to simulation speed
+In the paper, a more sophisticated analysis led to an estimate of $c_{Kott.} = 10.0\text{km}/\text{year}$ (with 95% confidence interval $7.5-12.5\text{km}/\text{year}$).  
 
-#### Sensitivity analysis
+### 2. Sensitivity analysis
 
-### 3. Introduction of latency period 
-In White (2020), the incubation period (infected but asymptomatic, and negligible to no infectivity) is estimated with Bayesian methods at 1.2 years (1-1.3 95% credibility interval).
+### 3. Model parameter search 
 
 **Definition of risk**
+
+### 4. Further proposals: introduction of latency period 
+In White (2020), the incubation period (infected but asymptomatic, and negligible to no infectivity) is estimated with Bayesian methods at 1.2 years (1-1.3 95% credibility interval).
+One idea for further analysis would be to incorporate this information in the simulation model.
+At present (17/07/2024), this was not implemented due to lack of time.
 
 ## Summary of other main results and findings 
 
 White et al, 2017
 Kottelenberg et al, 2021
-
-## Extra
-### Long-distance dispersal equation
-If we wanted to model the average infection level ($\overline{I}_t$) over $N\rightarrow\infty$ runs of the simulation, we can find an analytical expression for the long-distance kernel. 
-The evolution is written as the following: 
-
-$$
-\begin{aligned}
-\overline{I}\_{t+1}(x,y) & = \overline{I}\_t(x,y) + \Delta \overline{I}\_t(x,y) \\
-& = \overline{I}\_t(x,y) + \overline{M}_{in}(x,y)\cdot(d(x,y) - \overline{I}_t(x,y))e^{-B}
-\end{aligned}
-$$
-
-where $\overline{M}_{in}(x,y)$ is the average number of dispersers jumping into the cell $(x,y)$. 
-This term can be written in the following way:
-
-$$
-\overline{M}\_{in}(x,y) = \sum\_i\sum\_j p(x-i,y-j) \overline{M}_{out}(i,j)
-$$
-
-where the probability $p(x-i,y-j)$ follows a discretized gaussian distribution, .
-The final term $\overline{M}_{out}(i,j)$ is the average number of dispersers jumping out of cell $(i,j)$ and is equal to the average number of dispersers of $(i,j)$ (if it disperses) multiplied by the probability that $(i,j)$ disperses: 
-
-$$
-\begin{aligned}
-\overline{M}\_{out}(x,y) & = \frac{M_{max}}{2}\cdot P(\rho I_t(x,y) > p) \\
-& = \frac{M_{max}}{2}\cdot (1 - P(\rho I_t(x,y) < p)) \\
-& = \frac{M_{max}}{2} \left[1 - \frac{p}{d(x,y)}\left(1 - \text{log}\frac{p}{d(x,y)}\right)\right]
-\end{aligned}
-$$
-
-The expression 
-
-$$
-P(\rho I_t(x,y) < p) = 1 - \frac{p}{d(x,y)}\left(1 - \text{log}\frac{p}{d(x,y)}\right)
-$$ 
-
-is the cumulative distribution of the product of two uniformly distributed random variables, respectively $\rho$ on $\[0,1\]$ and $I_t(x,y)$ on $\[0,d(x,y)\]$ for all times $t$.
-The latter is a quite strong assumption considering that, as the infection progresses, the fraction of cells with a high level of infection ($`I_t(x,y)\lesssim d(x,y)`$) increase (so the distribution of $I\_t(x,y)$ would be skewed towards $`d(x,y)`$).
-However, in areas where the infection has progressed, random dispersers would mainly disperse into cells with a high level of infection, and their contribution would be negligible to the overall spreading of the infection.
-Therefore, we practically imagine that the uniform distribution of $I_t(x,y)$ is applied only to the front of the infection.
-
-To summarize, the final expression for the average infections $\overline{I}^L\_{t+1}=I^L_{t+1}$ is:
-
-$$
-\begin{aligned}
-I^L_{t+1}(x,y) & = I^S_{t+1}(x,y) + \Delta I^S_{t+1}(x,y) \\
-& = I^S_{t+1}(x,y) + \overline{M}\_{in}(x,y)\cdot(d(x,y) - I^S\_{t+1}(x,y))e^{-B} \\
-& = I^S_{t+1}(x,y) + (d(x,y) - I^S\_{t+1}(x,y))e^{-B}\cdot\sum\_i\sum\_j p(x-i,y-j) \overline{M}\_{out}(i,j) \\
-& = I^S_{t+1}(x,y) + (d(x,y) - I^S\_{t+1}(x,y))e^{-B}\cdot\sum\_i\sum\_j p(x-i,y-j) \frac{M_{max}}{2} \left[1 - \frac{p}{d(i,j)}\left(1 - \text{log}\frac{p}{d(i,j)}\right)\right] \\
-& = I^S_{t+1}(x,y) + (d(x,y) - I^S\_{t+1}(x,y))e^{-B}\frac{M_{max}}{2}(p(x,y) * g(d(x,y)))
-\end{aligned}
-$$
-
-where $g(d(x,y)) = \left[1 - \frac{p}{d(x,y)}\left(\ - \text{log}\frac{p}{d(x,y)}\right)\right]$.
-
 
 ## References
 <a id="1">[1]</a>
@@ -173,3 +122,6 @@ _European Commission_ (https://food.ec.europa.eu/plants/plant-health-and-biosecu
 
 <a id="5">[5]</a>
 _Emergenza Xylella (Apulia Region)_ (http://www.emergenzaxylella.it/)
+
+<a id="6">[6]</a>
+Kottelenberg, D., Hemerik, L., Saponari, M. et al. Shape and rate of movement of the invasion front of Xylella fastidiosa spp. pauca in Puglia. Sci Rep 11, 1061 (2021).
