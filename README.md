@@ -22,7 +22,7 @@ In the following, the epicentre of the disease is assumed to be Gallipoli (40.05
     <img src=Images/All_samples_by_year.png width=1000 height=844>
 </div>
 
-#### i. Linear regression
+#### _i_) Linear regression
 
 In this first method, we use a simple linear regression over the evolution of the maximum distance from the epicentre over time. 
 We get an estimate for the speed $c$ over all years (2013-2023) or only over the first 4 years of samples (2013-2016), $c_{\text{init}}$.
@@ -41,7 +41,7 @@ $$
     <img src=Images/Disease_Spreading_Speed.png width=700 height=417>
 </div>
 
-#### ii. Kottelenberg method
+#### _ii_) Kottelenberg method
 
 For the second method, we take inspiration from Kottelenberg et al. (2021, [[6]](#6)).
 Here, the authors attempt to estimate the shape of the invasion front and its rate of movement. 
@@ -122,16 +122,16 @@ We study how the disease spreading speed $c_{\text{risk}}$ varies as we tweak th
 The parameters that we will explore are: $\brace A, B, \beta, p, M_{max}, D\rbrace$.
 For evaluating the risk, we fix $N = 30$. 
 
-##### i. A: rate of local growth
+##### _i_) A: rate of local growth
 
 From the below figure we can see that increasing the rate of local growth $A$ has an effect on increasing the speed, up to a point, after which the speed doesn't vary much anymore. 
 If we recall the graph showing the local growth as a function of $A$, we can easily understand why: for values of $A$ exceeding 4 or 5, one timestep of the simulation (i.e. one year) is enough to send the incidence close to 100%, and for larger $A$ there is not much change. 
 
 <div align="center">
-    <img src=Images/Speed_vs_A.png width=600 height=484>
+    <img src=Images/Speed_A.png width=600 height=484>
 </div>
 
-##### ii. B: (related to) initial proportion of infected
+##### _ii_) B: (related to) initial proportion of infected
 
 Let's recall that the parameter $B$ is related to the seeding of a new cell through the proportion $e^{-B}$.
 Therefore, for greater $B$ we would obtain a smaller seeding.
@@ -141,14 +141,18 @@ On the other hand, we see that for smaller values of $B$, the speed doesn't chan
 This is obvious since we just concluded in the previous section that it is $A$ that mainly drives the local growth.
 
 <div align="center">
-    <img src=Images/Speed_vs_B.png width=600 height=450>
+    <img src=Images/Speed_B.png width=600 height=450>
 </div>
 
-##### iii. A and B (simultaneously)
+##### _iii_) A and B (simultaneously)
+
+To further prove the previous statement, we plot the speed as a function of both parameters $A$ and $B$ and we see that the greater changes occur along the $A$-axis, and not the $B$-axis.
 
 <div align="center">
-    <img src=Images/Speed_vsAB.png width=600 height=600>
+    <img src=Images/Speed_AB.png width=600 height=600>
 </div>
+
+##### _iv_) $\beta$: mean dispersal distance
 
 
 
