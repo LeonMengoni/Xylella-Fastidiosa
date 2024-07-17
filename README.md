@@ -112,11 +112,18 @@ $$
 
 where $A$ is the rate of population growth, $B$ is related to the initial proportion of plants that are infected, and $K(x,y) = d(x,y) + a(1 - d(x,y))$ is the carrying capacity; $d(x,y)$ is the proportional cover/density of olive groves in a 1km² grid cell, and $a\in[0,1]$ is the carrying capacity in non-olive grove habitat, relative to that in olive groves. 
 Here, $I_t(x,y)$ is the density of infected trees, such that $I_t(x,y)\in[0, d(x,y)]$. 
+
 The incidence is therefore defined as: 
 
 $$
 i_t(x,y) = \frac{I_t(x,y)}{d(x,y)}
 $$
+
+After 2 years from the seeding of the infection in a cell, the incidence plateaus at 1.
+
+<div align="center">
+  <img src=Images/Local_growth.png width=400 height=400>
+</div>
 
 The Gompertz function parameters have been fitted on the data, yielding the values $\lbrace A = 3, B = 14.069\rbrace$, while we assume $a = 0$ (we consider only olive trees, no other trees) and $d(x,y)$ is taken from the file ```olivegrowthprop.mat```.
 
