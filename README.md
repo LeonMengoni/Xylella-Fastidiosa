@@ -36,6 +36,7 @@ These insects thrive and lay eggs in weeds in the spring months.
 The young spittlebugs — nymphs — are born in the protected environment of a foam nest and, as summer approaches, they grow out of the dried out foam nest into adults.
 The nymphs have reduced mobility compared to adult vectors (which can jump up to 70 cm), and feed only on herbaceous hosts (weeds), while the latter feed also on woody hosts.
 Therefore, monitoring campaigns focus mostly, if not completely, on adult vectors. 
+The vectors can sometimes also spread long-distances, by hitchhiking on cars or trucks. 
 The figure below ([[2]](#2)) summarizes the vectors' life cycle. 
 
 <div align="center">
@@ -394,8 +395,11 @@ $$
 f(A, B, \beta, M_{max}, D | \overline{c}) = [c(\mathcal{M}(A, B, \beta, M_{max}, D)) - \overline{c}]^2
 $$
 
-To minimize the search time, we can eliminate $B$ from the analysis since we determined that it doesn't affect the final speed estimates very much. 
+To minimize the search time, we can eliminate $B$ from the analysis since we determined that it doesn't affect the final speed estimates very much.
+We do not have an objective function to calculate $c(\mathcal{M}(A, B, \beta, M_{max}, D))$, so the gradient is not known.
+Gradient methods for minimization cannot therefore be used, so we will use a 
 
+Genetic algorithms could also be used for more efficient optimization. 
 
 ### 4. Varying control measures
 
