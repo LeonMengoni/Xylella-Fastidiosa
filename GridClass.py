@@ -241,10 +241,14 @@ class Grid():
             if self.use_risk:       infected_mask = self.risk[t] > 0
             infected_coordinates = np.argwhere(infected_mask)
             distances = np.linalg.norm(infected_coordinates - self.seed, axis=1)
-            if not self.weighted:   
+            
+            if not self.weighted:
                 self.avg_distance[t] = np.mean(distances)
-            if self.weighted:       
-                weights = self.incidence[t][infected_mask].flatten()
+            if self.weighted:
+                if not self.use_risk:       
+                    weights = self.incidence[t][infected_mask].flatten()
+                if self.use_risk:
+                    weights = self.risk[t][infected_mask].flatten()
                 self.weighted_distance[t] = (distances * weights).sum() / weights.sum()
 
         X = np.arange(self.timesteps+1)
